@@ -1,12 +1,16 @@
+<template>
+  <div class="bg-white dark:bg-pink-950 dark:text-white flex-col flex-1 px-6">
+    <div class="text-3xl font-bold underline">my indexdude {{ searching }}</div>
+    <MuiInput v-model="searching" :label="'searching'" />
+    <MuiList />
+  </div>
+</template>
+
 <script lang="ts" setup>
 useHead({
   titleTemplate: "",
-  title: "Nuxt 3 Awesome Starter",
+  title: "twowatch",
 });
-</script>
 
-<template>
-  <div>
-    <h2>my indexdude</h2>
-  </div>
-</template>
+const searching = ref("");
+</script>
