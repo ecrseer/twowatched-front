@@ -1,8 +1,12 @@
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <div class="flex flex-col h-full justify-between items-stretch">
     <div class="text-3xl">{{ searching }}</div>
-    <MuiList />
-    <MuiInput v-model="searching" :label="'searching'" />
+    <div class="flex flex-col items-center">
+      <MuiList />
+    </div>
+    <div class="mb-12 mx-12">
+      <MuiInput v-model="searching" :label="'searching'" />
+    </div>
   </div>
 </template>
 
