@@ -3,9 +3,10 @@
     <input
       type="text"
       id="name"
+      placeholder=" "
       :value="props.modelValue"
       @input="emit('update:modelValue', $event.target?.value)"
-      class="w-full focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-3 px-3 block appearance-none leading-normal focus:border-fuchsia-400"
+      class="w-full focus:outline-none glass text-primary-focus focus:shadow-outline border border-gray-300 rounded-md py-3 px-3 block appearance-none leading-normal focus:border-fuchsia-400"
     />
 
     <label

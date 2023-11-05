@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-200 menu-horizontal rounded-box">
+  <ul class="menu glass menu-horizontal rounded-box">
     <li>
       <a>
         <svg

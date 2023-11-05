@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-200 w-56 rounded-box">
+  <ul class="menu glass w-56 rounded-box">
     <li>
       <a>
         <svg
@@ -17,7 +17,7 @@
           />
         </svg>
         Item 2
-        <span class="badge badge-sm badge-warning">Chat</span>
+        <span class="badge badge-sm badge-warning" @click.prevent>Chat</span>
       </a>
     </li>
     <li>
