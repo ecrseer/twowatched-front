@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white dark:bg-pink-950 dark:text-white flex-col flex-1 px-6">
+  <div class="flex flex-col justify-center items-center">
     <div class="text-3xl">{{ searching }}</div>
-    <MuiInput v-model="searching" :label="'searching'" />
     <MuiList />
+    <MuiInput v-model="searching" :label="'searching'" />
   </div>
 </template>
 

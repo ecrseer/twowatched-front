@@ -9,5 +9,13 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  app: {
+    head: {
+      // this htmlAttrs you need
+      htmlAttrs: {
+        "data-theme": "valentine",
+      },
+    },
+  },
 });
 

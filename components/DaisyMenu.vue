@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-200 lg:menu-horizontal rounded-box">
+  <ul class="menu bg-base-200 menu-horizontal rounded-box">
     <li>
       <a>
         <svg
@@ -38,12 +38,6 @@
         </svg>
         Updates
         <span class="badge badge-sm badge-warning">NEW</span>
-      </a>
-    </li>
-    <li>
-      <a>
-        Stats
-        <span class="badge badge-xs badge-info"></span>
       </a>
     </li>
   </ul>

@@ -1,42 +1,43 @@
 <template>
-  <div>
-    <ul class="dark:divide-white px-4">
-      <li class="py-1 px-4 dark:bg-fuchsia-800 rounded-full">
-        <div class="flex items-center">
-          <input
-            id="todo1"
-            name="todo1"
-            type="checkbox"
-            class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+  <ul class="menu bg-base-200 w-56 rounded-box">
+    <li>
+      <a>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
           />
-          <label for="todo1" class="ml-3 flex text-gray-900">
-            <span class="text-lg font-medium dark:text-white"
-              >Finish project proposal</span
-            >
-            <span class="text-sm font-light text-gray-500 dark:text-white"
-              >Due on 4/1/23</span
-            >
-          </label>
-        </div>
-      </li>
-      <li class="py-4">
-        <div class="flex items-center">
-          <input
-            id="todo1"
-            name="todo1"
-            type="checkbox"
-            class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:text-white"
+        </svg>
+        Item 2
+        <span class="badge badge-sm badge-warning">Chat</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
           />
-          <label for="todo1" class="ml-3 block text-gray-900">
-            <span class="text-lg font-medium dark:text-white"
-              >Finish project proposal</span
-            >
-            <span class="text-sm font-light text-gray-500 dark:text-white"
-              >Due on 4/1/23</span
-            >
-          </label>
-        </div>
-      </li>
-    </ul>
-  </div>
+        </svg>
+        Item 2
+      </a>
+    </li>
+  </ul>
 </template>
