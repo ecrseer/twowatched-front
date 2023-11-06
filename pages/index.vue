@@ -17,4 +17,36 @@ useHead({
 });
 
 const searching = ref("");
+watch(searching, (movie) => {
+  console.log("🚀 ~ watch ~ movie:", movie);
+  const base_url = "https://api.themoviedb.org/3/search/multi";
+  // const url =
+  //   "https://api.themoviedb.org/3/search/multi?query=fsf&include_adult=false&language=en-US&page=1";
+
+  useFetch(base_url, {
+    method: "get",
+    headers: {
+      accept: "application/json",
+    },
+    query: {
+      query: movie,
+      include_adult: true,
+      language: "en-US",
+      page: 1,
+      api_key: "146ddf71a6ccbd46651d641ac6e65517",
+    },
+  }).then((data) => {
+    console.log("🚀 ~ watch ~ data:", data.data);
+  });
+  useFetch("/api/", { method: "get" }).then((data) => {
+    console.log("🚀 ~ watch ~ data:", data);
+  });
+
+  useFetch("/api/multiple", { method: "get" }).then((data) => {
+    console.log("🚀 ~ watch ~ data:", data);
+  });
+  useFetch("/multiple", { method: "get" }).then((data) => {
+    console.log("🚀 ~ watch ~ data:", data);
+  });
+});
 </script>
