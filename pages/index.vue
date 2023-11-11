@@ -38,15 +38,5 @@ watch(searching, (movie) => {
   }).then((data) => {
     console.log("🚀 ~ watch ~ data:", data.data);
   });
-  useFetch("/api/", { method: "get" }).then((data) => {
-    console.log("🚀 ~ watch ~ data:", data);
-  });
-
-  useFetch("/api/multiple", { method: "get" }).then((data) => {
-    console.log("🚀 ~ watch ~ data:", data);
-  });
-  useFetch("/multiple", { method: "get" }).then((data) => {
-    console.log("🚀 ~ watch ~ data:", data);
-  });
 });
 </script>

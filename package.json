@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "dev:host": "nuxt dev  --port 3000 --host"
+
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -27,5 +29,8 @@
     "vue": "^3.3.7",
     "vue-router": "^4.2.5",
     "vue-tsc": "^1.6.5"
+  },
+  "dependencies": {
+    "nuxt3-socket.io": "^0.2.0"
   }
 }

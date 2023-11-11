@@ -17,8 +17,21 @@
           />
         </svg>
         Item 2
-        <span class="badge badge-sm badge-warning" @click.prevent>Chat</span>
+        <span class="badge badge-sm badge-warning" @click="create_or_go_to_room"
+          >Chat</span
+        >
+        <!-- <NuxtLink to="room/two/Ad124234">Chat</NuxtLink> -->
       </a>
     </li>
   </ul>
 </template>
+<script setup lang="ts">
+import { useTwaroomStore } from "../store/twaroom";
+
+async function create_or_go_to_room() {
+  //navigateTo..
+  const store = useTwaroomStore();
+  await store.create_room();
+  await navigateTo({ path: "/room/two/Ad92dk39" });
+}
+</script>

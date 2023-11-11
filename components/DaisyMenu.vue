@@ -1,7 +1,7 @@
 <template>
   <ul class="menu glass menu-horizontal rounded-box">
     <li>
-      <a>
+      <NuxtLink to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -18,7 +18,7 @@
         </svg>
         Inbox
         <span class="badge badge-sm">99+</span>
-      </a>
+      </NuxtLink>
     </li>
     <li>
       <a>
