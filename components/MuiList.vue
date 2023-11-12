@@ -20,7 +20,6 @@
         <span class="badge badge-sm badge-warning" @click="create_or_go_to_room"
           >Chat</span
         >
-        <!-- <NuxtLink to="room/two/Ad124234">Chat</NuxtLink> -->
       </a>
     </li>
   </ul>
@@ -31,7 +30,10 @@ import { useTwaroomStore } from "../store/twaroom";
 async function create_or_go_to_room() {
   //navigateTo..
   const store = useTwaroomStore();
-  await store.create_room();
-  await navigateTo({ path: "/room/two/Ad92dk39" });
+  const room = await store.create_room();
+
+  if (room) {
+    await navigateTo({ path: `/room/two/${room._id}` });
+  }
 }
 </script>
