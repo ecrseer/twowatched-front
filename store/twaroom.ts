@@ -6,8 +6,9 @@ export const useTwaroomStore = defineStore("twaroomStore", () => {
   const socket = useSocket();
   const io = useIO();
 
+  const config = useRuntimeConfig();
   function test_connection() {
-    const socket2 = io(process.env.BACKEND_URI || "http://localhost:3030");
+    const socket2 = io(config.public.BACKEND_URI);
     console.log("🚀 ~ onMounted ~ socket2:", socket2);
     socket2.on("connect", () => {
       connected.value = socket2.connected;
@@ -31,7 +32,7 @@ export const useTwaroomStore = defineStore("twaroomStore", () => {
       messages: [],
     };
     try {
-      const data = await $fetch(`${process.env.BACKEND_URI}/twaroom`, {
+      const data = await $fetch(`${config.public.BACKEND_URI}/twaroom`, {
         method: "POST",
         body: room,
       });

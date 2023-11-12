@@ -2,7 +2,11 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-
+  runtimeConfig: {
+    public: {
+      BACKEND_URI: process.env.BACKEND_URI,
+    },
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

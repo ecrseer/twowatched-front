@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useTwaroomStore } from "../store/twaroom";
+import { useTwaroomStore } from "../../../store/twaroom";
 
 onMounted(() => {
   const store = useTwaroomStore();
