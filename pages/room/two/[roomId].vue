@@ -34,33 +34,10 @@
 </template>
 
 <script lang="ts" setup>
-// Default
-const socket = useSocket();
-
-// Custom
-const io = useIO();
-
-const connected = ref(false);
-
-function test_connection() {
-  const socket2 = io("http://localhost:3030");
-  console.log("🚀 ~ onMounted ~ socket2:", socket2);
-  socket2.on("connect", () => {
-    connected.value = socket2.connected;
-  });
-
-  socket2.on("disconnect", () => {
-    connected.value = socket2.connected;
-  });
-  socket2.on("message", (abc) => {
-    console.log("🚀 ~ socket2.on ~ abc:", abc);
-  });
-  socket2.emit("message", { abc: "123" }, (data) => {
-    console.log("🚀 ~ socket2.emit ~ data:", data);
-  });
-}
+import { useTwaroomStore } from "../store/twaroom";
 
 onMounted(() => {
-  test_connection();
+  const store = useTwaroomStore();
+  store.test_connection();
 });
 </script>

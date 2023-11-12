@@ -2,6 +2,28 @@ import { defineStore } from "pinia";
 export const useTwaroomStore = defineStore("twaroomStore", () => {
   const mocking = ref("blue");
 
+  const connected = ref(false);
+  const socket = useSocket();
+  const io = useIO();
+
+  function test_connection() {
+    const socket2 = io(process.env.BACKEND_URI || "http://localhost:3030");
+    console.log("🚀 ~ onMounted ~ socket2:", socket2);
+    socket2.on("connect", () => {
+      connected.value = socket2.connected;
+    });
+
+    socket2.on("disconnect", () => {
+      connected.value = socket2.connected;
+    });
+    socket2.on("message", (abc) => {
+      console.log("🚀 ~ socket2.on ~ abc:", abc);
+    });
+    socket2.emit("message", { abc: "123" }, (data) => {
+      console.log("🚀 ~ socket2.emit ~ data:", data);
+    });
+  }
+
   async function create_room() {
     const room = {
       name: `${new Date().toLocaleDateString}-name`,
@@ -9,7 +31,7 @@ export const useTwaroomStore = defineStore("twaroomStore", () => {
       messages: [],
     };
     try {
-      const data = await $fetch(`${BACKEND_URI}/twaroom`, {
+      const data = await $fetch(`${process.env.BACKEND_URI}/twaroom`, {
         method: "POST",
         body: room,
       });
@@ -19,6 +41,6 @@ export const useTwaroomStore = defineStore("twaroomStore", () => {
     }
   }
 
-  return { mocking, create_room };
+  return { mocking, create_room, test_connection };
 });
 
