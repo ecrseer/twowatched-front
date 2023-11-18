@@ -7,9 +7,10 @@
       v-for="message in store.current_room.messages"
       :key="message.message"
       :message="message"
+      :isCurrentUser="user.sender_user_id === message.sender_user_id"
     />
   </div>
-  <input type="text" v-model="message" @keyup.enter="send_message" />
+  <input type="text" v-model="typing" @keyup.enter="send_message" />
 </template>
 
 <script lang="ts" setup>
@@ -17,7 +18,7 @@ import { useTwaroomStore } from "../../../store/twaroom";
 
 const route = useRoute();
 const store = useTwaroomStore();
-const message = ref("");
+const typing = ref("");
 
 const user = computed(() => {
   return {
@@ -26,7 +27,8 @@ const user = computed(() => {
   };
 });
 function send_message() {
-  store.send_message_to_room({ ...user.value, message: message.value });
+  store.send_message_to_room({ ...user.value, message: typing.value });
+  typing.value = "";
 }
 
 onMounted(() => {
