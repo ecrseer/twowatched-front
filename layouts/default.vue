@@ -29,9 +29,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ManageMovies } from "../store/ManageMovies";
+import { ManageMoviesSingleton } from "../singleton-stores/ManageMovies";
 
-const moviesManager = ManageMovies();
+const moviesManager = ManageMoviesSingleton();
 </script>
 <style scoped>
 .root_div {

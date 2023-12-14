@@ -1,14 +1,14 @@
-import { ManageMovies } from "../store/ManageMovies";
+import { ManageMoviesSingleton } from "../singleton-stores/ManageMovies";
 import type {
   iSearchRequestTmdbMovieDTO,
   iTwaMovie,
-} from "../store/ManageMovies/interfaces";
+} from "../singleton-stores/ManageMovies/interfaces";
 
 export function MoviesListController() {
   const searching = ref("");
   const currentSearchedMovie = ref<iTwaMovie>({});
 
-  const movieManager = ManageMovies();
+  const movieManager = ManageMoviesSingleton();
   const configs = useRuntimeConfig();
 
   let bounceSearch = setTimeout(() => null, 1);
@@ -51,4 +51,3 @@ export function MoviesListController() {
   }
   return { searching, onSearchMovieInput, onClickAddMovieBtn };
 }
-
