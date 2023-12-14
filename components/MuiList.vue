@@ -25,11 +25,11 @@
   </ul>
 </template>
 <script setup lang="ts">
-import { useTwaroomStore } from "../store/twaroom";
+import { TwaroomSingleton } from "../singleton-stores/twaroom";
 
 async function create_or_go_to_room() {
   //navigateTo..
-  const store = useTwaroomStore();
+  const store = TwaroomSingleton();
   const room = await store.create_room();
 
   if (room) {

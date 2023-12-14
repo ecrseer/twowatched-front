@@ -21,11 +21,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { iTwamessage } from "../../store/dtos";
+import type { iTwamessage } from "../../singleton-stores/dtos";
 
 const props = defineProps<{
   message: Partial<iTwamessage>;
   isCurrentUser?: boolean;
 }>();
 </script>
-

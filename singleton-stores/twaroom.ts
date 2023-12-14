@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { iTwaroom } from "./dtos";
 
-export const useTwaroomStore = defineStore("twaroomStore", () => {
+export const TwaroomSingleton = defineStore("TwaroomSingleton", () => {
   const current_room = ref<null | iTwaroom>(null);
 
   const connected = ref(false);
@@ -75,4 +75,3 @@ export const useTwaroomStore = defineStore("twaroomStore", () => {
 
   return { current_room, create_room, send_message_to_room, enter_room };
 });
-

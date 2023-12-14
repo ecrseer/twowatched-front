@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useTwaroomStore } from "../../../store/twaroom";
+import { TwaroomSingleton } from "../../../singleton-stores/twaroom";
 
 const route = useRoute();
-const store = useTwaroomStore();
+const store = TwaroomSingleton();
 const typing = ref("");
 
 const user = computed(() => {
