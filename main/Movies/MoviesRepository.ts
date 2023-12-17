@@ -5,13 +5,16 @@ import type { iTwaMovie } from "./interfaces";
 export const ManageMoviesRepository = defineStore(
   "ManageMoviesRepository",
   () => {
-    const moviesList = ref<iTwaMovie[]>([]);
+    const moviesList = ref<iTwaMovie[]>([{ name: "Demon slayer" }]);
     const currentSearchedMovieImage = ref("");
 
     function addToMoviesList(movie: iTwaMovie) {
       moviesList.value.push(movie);
     }
-    return { addToMoviesList, currentSearchedMovieImage };
+    function getMovies() {
+      return moviesList.value;
+    }
+    return { addToMoviesList, currentSearchedMovieImage, getMovies };
   }
 );
 

@@ -7,8 +7,11 @@ import DaisyListVue from "../../components/DaisyList.vue";
 import DaisyInputVue from "../../components/DaisyInput.vue";
 
 describe("index page", () => {
-  it("List component is ok", async () => {
-    const listComponent = mount(DaisyListVue);
+  it("Movie List component is ok", async () => {
+    const listComponent = mount(DaisyListVue, {
+      props: { items: [{ name: "test1" }] },
+    });
+
     expect(listComponent.find("ul").exists()).toBe(true);
   });
 
