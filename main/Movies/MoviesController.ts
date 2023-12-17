@@ -44,7 +44,14 @@ export function MoviesController() {
   }
 
   function onClickAddMovieBtn() {
-    movieManager.addToMoviesList(currentSearchedMovie.value);
+    // movieManager.addToMoviesList(currentSearchedMovie.value);
+    movieManager.addToMoviesList(mockSearchedMovie());
+  }
+  function mockSearchedMovie() {
+    const mockMovie: iTwaMovie = {
+      name: searching.value,
+    };
+    return mockMovie;
   }
   return { searching, onSearchMovieInput, onClickAddMovieBtn };
 }

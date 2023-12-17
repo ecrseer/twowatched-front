@@ -1,7 +1,7 @@
 <template>
   <div class="h-full w-full font-sans">
     <div
-      class="root_div bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness-50"
+      class="root_div bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness-50 -z-50"
     ></div>
     <div class="h-full p-12">
       <main class="h-full">
