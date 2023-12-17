@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import type { iTwaMovie } from "./interfaces";
 
-export const ManageMoviesSingleton = defineStore(
-  "ManageMoviesSingleton",
+export const ManageMoviesRepository = defineStore(
+  "ManageMoviesRepository",
   () => {
     const moviesList = ref<iTwaMovie[]>([]);
     const currentSearchedMovieImage = ref("");
@@ -14,3 +14,4 @@ export const ManageMoviesSingleton = defineStore(
     return { addToMoviesList, currentSearchedMovieImage };
   }
 );
+

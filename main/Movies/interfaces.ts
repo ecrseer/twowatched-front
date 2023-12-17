@@ -22,4 +22,3 @@ export interface iSearchRequestTmdbMovieDTO {
   results: iTmdbMovieDTO[];
 }
 export interface iTwaMovie extends Partial<iTmdbMovieDTO> {}
-

@@ -22,7 +22,13 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["nuxt3-socket.io", "@pinia/nuxt"],
+  modules: [
+    "nuxt3-socket.io",
+    "@pinia/nuxt",
+    "nuxt-vitest",
+    "@nuxt/content",
+    "@nuxt/devtools",
+  ],
   socket: {
     // JSON serializable options only.
     // options object to pass when instantiating socket server.
