@@ -3,6 +3,7 @@ import type { iSearchRequestTmdbMovieDTO, iTwaMovie } from "./interfaces";
 
 export function MoviesController() {
   const searching = ref("");
+  const is_fetching_data = ref(false);
   const currentSearchedMovie = ref<iTwaMovie>({});
 
   const movieManager = ManageMoviesRepository();
@@ -10,6 +11,7 @@ export function MoviesController() {
 
   let bounceSearch = setTimeout(() => null, 1);
   function searchMovie() {
+    is_fetching_data.value = true;
     const base_url = "https://api.themoviedb.org/3/search/multi";
 
     useFetch(base_url, {
@@ -35,17 +37,23 @@ export function MoviesController() {
       } else {
         movieManager.currentSearchedMovieImage = ``;
       }
+      is_fetching_data.value = false;
     });
   }
 
   function onSearchMovieInput() {
     clearTimeout(bounceSearch);
-    // bounceSearch = setTimeout(searchMovie, 1000);
+    bounceSearch = setTimeout(searchMovie, 1000);
   }
 
   function onClickAddMovieBtn() {
-    // movieManager.addToMoviesList(currentSearchedMovie.value);
-    movieManager.addToMoviesList(mockSearchedMovie());
+    if (is_fetching_data.value) return;
+
+    if (currentSearchedMovie.value.title! || currentSearchedMovie.value.name) {
+      movieManager.addToMoviesList(currentSearchedMovie.value);
+    } else {
+      throw new Error("need to search first");
+    }
   }
   function mockSearchedMovie() {
     const mockMovie: iTwaMovie = {

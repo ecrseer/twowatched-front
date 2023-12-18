@@ -5,7 +5,6 @@
     ></div>
     <div class="h-full p-12">
       <main class="h-full">
-        {{ moviesManager.currentSearchedMovieImage }}
         <slot />
       </main>
     </div>

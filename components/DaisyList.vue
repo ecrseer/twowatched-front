@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu glass w-56 rounded-box" v-if="items">
+  <ul class="menu bg-primary w-96 rounded-box" v-if="items">
     <li v-for="item in items" :key="item.name">
       <a>
         <svg
