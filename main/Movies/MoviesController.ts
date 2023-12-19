@@ -37,8 +37,8 @@ export function MoviesController() {
       } else {
         movieManager.currentSearchedMovieImage = ``;
       }
-      is_fetching_data.value = false;
     });
+    is_fetching_data.value = false;
   }
 
   function onSearchMovieInput() {
@@ -52,6 +52,7 @@ export function MoviesController() {
     if (currentSearchedMovie.value.title! || currentSearchedMovie.value.name) {
       movieManager.addToMoviesList(currentSearchedMovie.value);
     } else {
+      movieManager.addToMoviesList(mockSearchedMovie());
       throw new Error("need to search first");
     }
   }
