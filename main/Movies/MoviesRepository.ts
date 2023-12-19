@@ -8,8 +8,9 @@ export const ManageMoviesRepository = defineStore(
     const moviesList = ref<iTwaMovie[]>([{ name: "Demon slayer" }]);
     const currentSearchedMovieImage = ref("");
 
-    function addToMoviesList(movie: iTwaMovie) {
+    function addToMoviesList(movie: iTwaMovie): iTwaMovie[] {
       moviesList.value.push(movie);
+      return moviesList.value;
     }
     function getMovies() {
       return moviesList.value;

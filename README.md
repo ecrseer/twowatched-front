@@ -12,13 +12,23 @@ npm install
 
 ```
 
-## Development Server
+## Desenvolvimento
 
 Inicialize o servidor desenvolvimento:
 
 ```bash
 # npm
 npm run dev
+
+```
+
+## Testes
+
+Inicialize o servidor de testes:
+
+```bash
+# npm
+npm run test
 
 ```
 
