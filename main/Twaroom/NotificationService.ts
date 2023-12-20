@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import type { iTwaroom } from "../../singleton-stores/dtos";
-import { ManageMoviesRepository } from "../Movies/MoviesRepository";
+import { MoviesRepository } from "../Movies/MoviesRepository";
 
 export const NotificationService = defineStore("NotificationService", () => {
-  const moviesRepository = ManageMoviesRepository();
+  const moviesRepository = MoviesRepository();
   const current_room = ref<null | iTwaroom>(null);
 
   const connected = ref(false);

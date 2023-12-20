@@ -28,9 +28,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ManageMoviesRepository } from "../main/Movies/MoviesRepository";
+import { MoviesRepository } from "../main/Movies/MoviesRepository";
 
-const moviesManager = ManageMoviesRepository();
+const moviesManager = MoviesRepository();
 </script>
 <style scoped>
 .root_div {

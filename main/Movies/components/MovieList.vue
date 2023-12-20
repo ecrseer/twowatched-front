@@ -7,9 +7,9 @@
 <script setup lang="ts">
 import type { iDaisyListItem } from "../../../components/DaisyList.vue";
 import { TwaroomSingleton } from "../../../singleton-stores/twaroom";
-import { ManageMoviesRepository } from "../MoviesRepository";
+import { MoviesRepository } from "../MoviesRepository";
 
-const repository = ManageMoviesRepository();
+const repository = MoviesRepository();
 
 const movieItems = computed(() => {
   const movies = repository.getMovies();
@@ -28,6 +28,7 @@ const movieItems = computed(() => {
 async function create_or_go_to_room() {
   //navigateTo..
   const store = TwaroomSingleton();
+
   const room = await store.create_room();
 
   if (room) {
