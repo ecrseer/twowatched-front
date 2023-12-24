@@ -1,21 +1,43 @@
 import { defineStore } from "pinia";
 import type { iTwaroom } from "../../singleton-stores/dtos";
 import { MoviesRepository } from "../Movies/MoviesRepository";
+import type { iTwaMovie } from "../Movies/interfaces";
+import { WebsocketConnectionService } from "./WebsocketConnectionService";
+import { config } from "@vue/test-utils";
 
+export interface iEnterRoleplayRoomDto {
+  moviesList: iTwaMovie[];
+}
 export const NotificationService = defineStore("NotificationService", () => {
   const moviesRepository = MoviesRepository();
+  const { $io } = useNuxtApp();
+  const configs = useRuntimeConfig();
+
   const current_room = ref<null | iTwaroom>(null);
 
-  const connected = ref(false);
-  const socket = useSocket();
-  const io = useIO();
+  async function enter_roleplay_notifications_room() {
+    const moviesList = moviesRepository.getMovies();
+    // const { ws_connection } = WebsocketConnectionService();
+    const ws_connection = $io(configs.public.BACKEND_URI);
+    const dto: iEnterRoleplayRoomDto = {
+      moviesList,
+    };
 
-  function handle_roleplay_chat_request() {}
-  function send_roleplay_chat_request(chosen_movie: string) {
-    const current_movies = moviesRepository.getMovies();
-
-    // const socket2 = io(config.public.BACKEND_URI);
-    // socket2.emit("send_message", user);
+    console.log(
+      "🚀 ~ enter_roleplay_notifications_room ~ ws_connection:",
+      ws_connection
+    );
+    ws_connection?.emit("enter_roleplay_notifications_room", dto);
+    ws_connection.on("wants_movie_roleplay", (dto) => {
+      console.log("🚀 ~ wants_movie_roleplay.on ~ dto:", dto);
+    });
   }
+  async function handle_roleplay_chat_request(priority: iTwaMovie) {
+    const moviesList = moviesRepository.getMovies();
+    const ws_connection = $io(configs.public.BACKEND_URI);
+    ws_connection.emit("request_roleplay_chat", { priority, moviesList });
+  }
+
+  return { handle_roleplay_chat_request, enter_roleplay_notifications_room };
 });
 

@@ -14,6 +14,7 @@ export interface iTmdbMovieDTO {
   vote_average: number;
   vote_count: number;
   origin_country: string[];
+  title?: string;
 }
 export interface iSearchRequestTmdbMovieDTO {
   page: number;
@@ -22,3 +23,4 @@ export interface iSearchRequestTmdbMovieDTO {
   results: iTmdbMovieDTO[];
 }
 export interface iTwaMovie extends Partial<iTmdbMovieDTO> {}
+

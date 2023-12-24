@@ -1,0 +1,61 @@
+[
+    {
+      "adult": false,
+      "backdrop_path": "/5BMwFwNzSidVYArn561acqtktxv.jpg",
+      "id": 1100,
+      "name": "How I Met Your Mother",
+      "original_language": "en",
+      "original_name": "How I Met Your Mother",
+      "overview": "A father recounts to his children - through a series of flashbacks - the journey he and his four best friends took leading up to him meeting their mother.",
+      "poster_path": "/b34jPzmB0wZy7EjUZoleXOl2RRI.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        35
+      ],
+      "popularity": 1468.637,
+      "first_air_date": "2005-09-19",
+      "vote_average": 8.16,
+      "vote_count": 4494,
+      "origin_country": [
+        "US"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kWZVnBlI9u1Zjaql17bXnra20ud.jpg",
+      "id": 85267,
+      "name": "How I Met Your Mother",
+      "original_language": "ru",
+      "original_name": "Как я встретил вашу маму",
+      "overview": "How I Met Your Mother, the Russian comedy series produced by the company Good Story Media, which is an adaptation of the eponymous American television series How I Met Your Mother.\n\nThe main character of the series, Dima Nosov, in the distant 2034, tells his teenage children about his own youth, as well as the life stories of his friends. Dima describes the circumstances in which he met his future wife. At the same time, he dwells on various events that took place in his life at that time with him and his friends: Pasha Vinogradov, Lucy Lyubimova, Yury Sadovskiy, and Katya Krivchik. The main action of the series takes place in Moscow today (in 1st season - in 2008–2009).",
+      "poster_path": "/rTv2JPtemNBkOMDDNxqvEkGAI5S.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        35
+      ],
+      "popularity": 6.409,
+      "first_air_date": "2010-10-04",
+      "vote_average": 4.2,
+      "vote_count": 4,
+      "origin_country": [
+        "RU"
+      ]
+    },
+    {
+      "adult": true,
+      "backdrop_path": null,
+      "id": 944299,
+      "title": "This Isn't... How I Met Your Mother... It's a XXX Spoof!",
+      "original_language": "en",
+      "original_title": "This Isn't... How I Met Your Mother... It's a XXX Spoof!",
+      "overview": "Your mom always looks so prim and proper; people might think we met at a Sunday picnic in the park. But when I met her things were a little nastier. It was a rip-roaring Gang Bang with a roomful of the biggest cocks I'd ever seen, and your mom was taking every one of them, and taking them in every hole, three at a time! And when she was finally done, she was covered in cum! Now, that's really how we met!\"",
+      "poster_path": null,
+      "media_type": "movie",
+      "genre_ids": [],
+      "popularity": 0,
+      "release_date": "2011-10-27",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    }
+  ]
