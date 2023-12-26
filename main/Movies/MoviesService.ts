@@ -1,25 +1,28 @@
 import { defineStore } from "pinia";
-import type { iTwaroom } from "../../singleton-stores/dtos";
-import { MoviesRepository } from "../Movies/MoviesRepository";
-import type { iTwaMovie } from "../Movies/interfaces";
+import { reactive, ref } from "vue";
+import type { iTwaMovie } from "./interfaces";
 import {
   WebsocketConnectionService,
   type iWebsocket,
-} from "./WebsocketConnectionService";
-import { config } from "@vue/test-utils";
-
+} from "../Twaroom/WebsocketConnectionService";
 export interface iEnterRoleplayRoomDto {
   moviesList: iTwaMovie[];
 }
-export const NotificationService = defineStore("NotificationService", () => {
-  const moviesRepository = MoviesRepository();
 
-  // const configs = useRuntimeConfig();
+export const MoviesService = defineStore("MoviesService", () => {
+  const moviesList = ref<iTwaMovie[]>([{ name: "Demon slayer" }]);
+  const currentSearchedMovieImage = ref("");
 
-  const current_room = ref<null | iTwaroom>(null);
+  function addToMoviesList(movie: iTwaMovie): iTwaMovie[] {
+    moviesList.value.push(movie);
+    return moviesList.value;
+  }
+  function getMovies() {
+    return moviesList.value;
+  }
 
   async function enter_roleplay_notifications_room() {
-    const moviesList = moviesRepository.getMovies();
+    const moviesList = getMovies();
     const { get_connection } = WebsocketConnectionService();
     const ws_connection: iWebsocket = get_connection();
     const dto: iEnterRoleplayRoomDto = {
@@ -41,12 +44,18 @@ export const NotificationService = defineStore("NotificationService", () => {
   }
 
   async function handle_roleplay_chat_request(priority: iTwaMovie) {
-    const moviesList = moviesRepository.getMovies();
+    const moviesList = getMovies();
     const { get_connection } = WebsocketConnectionService();
     const ws_connection = get_connection();
     ws_connection.emit("request_roleplay_chat", { priority, moviesList });
   }
 
-  return { handle_roleplay_chat_request, enter_roleplay_notifications_room };
+  return {
+    addToMoviesList,
+    currentSearchedMovieImage,
+    getMovies,
+    handle_roleplay_chat_request,
+    enter_roleplay_notifications_room,
+  };
 });
 

@@ -28,9 +28,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { MoviesRepository } from "../main/Movies/MoviesRepository";
+import { MoviesService } from "../main/Movies/MoviesService";
 
-const moviesManager = MoviesRepository();
+const moviesManager = MoviesService();
 </script>
 <style scoped>
 .root_div {
@@ -52,3 +52,4 @@ const moviesManager = MoviesRepository();
   text-align: center;
 }
 </style>
+../main/Movies/MoviesService

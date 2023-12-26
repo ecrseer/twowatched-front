@@ -1,24 +1,16 @@
 <template>
   <div>
     <DaisyList :items="movieItems" />
-
-    <ClientOnly>
-      <NotificationHandlerClient :movieItems="movieItems" />
-    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { iDaisyListItem } from "../../../components/DaisyList.vue";
-import { TwaroomSingleton } from "../../../singleton-stores/twaroom";
-import NotificationHandlerClient from "../../Twaroom/NotificationHandler.client.vue";
-import { NotificationService } from "../../Twaroom/NotificationService";
-import { WebsocketConnectionService } from "../../Twaroom/WebsocketConnectionService";
-import { MoviesRepository } from "../MoviesRepository";
+import { MoviesService } from "../MoviesService";
+
 import type { iTwaMovie } from "../interfaces";
 
-const repository = MoviesRepository();
-const notificationService = NotificationService();
+const repository = MoviesService();
 
 const movieItems = computed(() => {
   const movies = repository.getMovies();
@@ -34,12 +26,14 @@ const movieItems = computed(() => {
   });
 });
 
+repository.enter_roleplay_notifications_room();
+
 async function create_or_go_to_room(movie: iTwaMovie) {
   //navigateTo..
   // const store = TwaroomSingleton();
 
   // const room = await store.create_room();
-  await notificationService.handle_roleplay_chat_request(movie);
+  await repository.handle_roleplay_chat_request(movie);
   // if (room) {
   //   await navigateTo({ path: `/room/two/${room._id}` });
   // }

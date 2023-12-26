@@ -1,13 +1,13 @@
 import { mockSearchedMovie } from "../../tests/nuxt/utils";
-import { MoviesRepository } from "./MoviesRepository";
-import type { iSearchRequestTmdbMovieDTO, iTwaMovie } from "./interfaces";
+import type { iTwaMovie, iSearchRequestTmdbMovieDTO } from "./interfaces";
+import { MoviesService } from "./MoviesService";
 
 export function MoviesController() {
   const searching = ref("");
   const is_fetching_data = ref(false);
   const currentSearchedMovie = ref<iTwaMovie>({});
 
-  const movieManager = MoviesRepository();
+  const movieManager = MoviesService();
   const configs = useRuntimeConfig();
 
   let bounceSearch = setTimeout(() => null, 1);

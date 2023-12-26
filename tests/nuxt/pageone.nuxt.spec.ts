@@ -7,13 +7,12 @@ import DaisyListVue from "../../components/DaisyList.vue";
 import DaisyInputVue from "../../components/DaisyInput.vue";
 import DaisyMenuVue from "../../components/DaisyMenu.vue";
 import DefaultVue from "../../layouts/default.vue";
-import { MoviesRepository } from "../../main/Movies/MoviesRepository";
-import { MoviesController } from "../../main/Movies/MoviesController";
+import { MoviesService } from "../../../main/Movies/MoviesServiceimport { MoviesController } from "../../main/Movies/MoviesController";
 import { mockSearchedMovie } from "./utils";
 
 describe("index page", () => {
   const controller = MoviesController();
-  const repository = MoviesRepository();
+  const repository = MoviesService();
 
   it("Should movie List component be rendered", async () => {
     const listComponent = mount(DaisyListVue, {
