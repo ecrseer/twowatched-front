@@ -13,6 +13,7 @@
         class="flex flex-col justify-center items-center fixed bottom-0 w-full"
       >
         <DaisyMenu />
+        <NotificationsHandlerClient />
       </div>
       <div class="fixed bottom-0 right-0 overflow-hidden">
         <div class="badge badge-xs">
@@ -29,6 +30,7 @@
 </template>
 <script setup lang="ts">
 import { MoviesService } from "../main/Movies/MoviesService";
+import NotificationsHandlerClient from "../main/Notifications/view/NotificationsHandler.client.vue";
 
 const moviesManager = MoviesService();
 </script>

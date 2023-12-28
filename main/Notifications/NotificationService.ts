@@ -8,25 +8,35 @@ export interface iNotification {
   type?: "success" | "error" | "warning" | "info";
   duration?: number;
   is_dismissable?: boolean;
+  onAccept?: () => Promise<any>;
 }
 
-const NotificationServiceData = defineStore("NotificationServiceData", () => {
-  const notifications = ref<iNotification[]>([]);
-  return { notifications };
+const NotificationRepository = defineStore("NotificationRepository", () => {
+  const persistence = reactive({
+    history: [] as iNotification[],
+    current: [] as iNotification[],
+  });
+  return { persistence };
 });
 
 export class NotificationService {
-  private data: ReturnType<typeof NotificationServiceData>;
+  private persistence: ReturnType<typeof NotificationRepository>["persistence"];
 
   constructor() {
-    const data = NotificationServiceData();
-    this.data = data;
+    const data = NotificationRepository();
+    this.persistence = data.persistence;
   }
-  public add_notification(notification: iNotification) {
-    this.data.notifications.push(notification);
+  get stack() {
+    return this.persistence.current;
   }
-  public get_notifications() {
-    return this.data.notifications;
+
+  public add_fading_notification(notification: iNotification) {
+    this.persistence.history.push(notification);
+    this.persistence.current.unshift(notification);
+
+    setTimeout(() => {
+      this.persistence.current.pop();
+    }, 3000);
   }
 }
 

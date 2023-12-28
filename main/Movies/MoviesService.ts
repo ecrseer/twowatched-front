@@ -5,6 +5,10 @@ import {
   WebsocketConnectionService,
   type iWebsocket,
 } from "../Twaroom/WebsocketConnectionService";
+import {
+  NotificationService,
+  type iNotification,
+} from "../Notifications/NotificationService";
 export interface iEnterRoleplayRoomDto {
   moviesList: iTwaMovie[];
 }
@@ -35,11 +39,9 @@ export const MoviesService = defineStore("MoviesService", () => {
   async function enable_roleplay_notifications_room_listeners(
     ws_connection: iWebsocket
   ) {
-    ws_connection.on("wants_movie_roleplay", (dto) => {
-      console.log("🚀 ~ wants_movie_roleplay.on ~ dto:", {
-        dto,
-        ws_connection,
-      });
+    ws_connection.on("wants_movie_roleplay", (notification: iNotification) => {
+      const notify_service = new NotificationService();
+      notify_service.add_fading_notification({ ...notification });
     });
   }
 
