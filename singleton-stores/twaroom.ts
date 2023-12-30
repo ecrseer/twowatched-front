@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { iTwaroom } from "./dtos";
+import type { iTwaroom } from "../main/Twaroom/dtos";
 
 export const TwaroomSingleton = defineStore("TwaroomSingleton", () => {
   const current_room = ref<null | iTwaroom>(null);

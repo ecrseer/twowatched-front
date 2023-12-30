@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { iTwamessage } from "../../singleton-stores/dtos";
+import type { iTwamessage } from "../../main/Twaroom/dtos";
 
 const props = defineProps<{
   message: Partial<iTwamessage>;
