@@ -8,20 +8,39 @@ import {
   WebsocketConnectionService,
   type iWebsocket,
 } from "./WebsocketConnectionService";
-import { NotificationService } from "../Notifications/NotificationService";
+import {
+  NotificationService,
+  type iNotification,
+} from "../Notifications/NotificationService";
 import type { iTwaMovie } from "../Movies/interfaces";
+import type { iTwaroom } from "./dtos";
+import { TwaroomReceiverService } from "./TwaroomReceiverService";
 
 const TwaroomRepository = defineStore("TwaroomRepository", () => {
-  const persistence = reactive({});
+  const persistence = reactive({
+    current_room: {} as iTwaroom,
+  });
   return { persistence };
 });
 
 export class TwaroomService {
   private persistence: ReturnType<typeof TwaroomRepository>["persistence"];
   private moviesService = MoviesService();
+  private receiver = new TwaroomReceiverService();
+
   constructor() {
     const attach = TwaroomRepository();
     this.persistence = attach.persistence;
+  }
+  public get current_room() {
+    return this.persistence.current_room;
+  }
+  public send_roleplay_chat_request(priority: iTwaMovie) {
+    const { get_connection } = WebsocketConnectionService();
+    const ws_connection = get_connection();
+
+    const moviesList = this.moviesService.getMovies();
+    ws_connection.emit("request_roleplay_chat", { priority, moviesList });
   }
 
   public async enter_roleplay_notifications_room() {
@@ -32,22 +51,41 @@ export class TwaroomService {
       moviesList,
     };
     ws_connection.emit("enter_roleplay_notifications_room", dto);
-    this.enable_roleplay_listeners(ws_connection);
+    this.receiver.attach();
   }
 
-  private async enable_roleplay_listeners(ws_connection: iWebsocket) {
-    ws_connection.on("wants_movie_roleplay", (notification: iNotification) => {
-      const notify_service = new NotificationService();
-      notify_service.add_fading_notification({ ...notification });
-    });
-  }
+  public async enter_room(user: { room_id: string; sender_user_id: string }) {
+    const { room_id, sender_user_id } = user;
+    const config = useRuntimeConfig();
+    try {
+      const room = await $fetch<iTwaroom>(
+        `${config.public.BACKEND_URI}/twaroom/${room_id}`,
+        {
+          method: "GET",
+        }
+      );
+      this.persistence.current_room = room;
 
-  public handle_roleplay_chat_request(priority: iTwaMovie) {
+      // socket2.on("append_message", (user_message) => {
+      //   this.persistence.current_room.messages.push(user_message);
+      // });
+      const { get_connection } = WebsocketConnectionService();
+      const ws_connection: iWebsocket = get_connection();
+      ws_connection.emit("enter_room", { room_id, sender_user_id });
+
+      return room;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  public send_message_to_room(user: {
+    room_id: string;
+    sender_user_id: string;
+    message: string;
+  }) {
     const { get_connection } = WebsocketConnectionService();
-    const ws_connection = get_connection();
-
-    const moviesList = this.moviesService.getMovies();
-    ws_connection.emit("request_roleplay_chat", { priority, moviesList });
+    const ws_connection: iWebsocket = get_connection();
+    ws_connection.emit("send_message", user);
   }
 }
 

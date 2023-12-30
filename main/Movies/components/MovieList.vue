@@ -31,7 +31,7 @@ const movieItems = computed(() => {
 roomService.enter_roleplay_notifications_room();
 
 async function create_or_go_to_room(movie: iTwaMovie) {
-  await roomService.handle_roleplay_chat_request(movie);
+  await roomService.send_roleplay_chat_request(movie);
   //   await navigateTo({ path: `/room/two/${room._id}` });
 }
 </script>

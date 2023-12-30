@@ -1,10 +1,10 @@
 <template>
   <div
     class="flex flex-col justify-between items-stretch overflow-auto"
-    v-if="store.current_room"
+    v-if="roomService.current_room"
   >
     <ChatMessageBubble
-      v-for="message in store.current_room.messages"
+      v-for="message in roomService.current_room.messages"
       :key="message.message"
       :message="message"
       :isCurrentUser="user.sender_user_id === message.sender_user_id"
@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts" setup>
-import { TwaroomSingleton } from "../../../singleton-stores/twaroom";
+import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 
+const roomService = new TwaroomService();
 const route = useRoute();
-const store = TwaroomSingleton();
 const typing = ref("");
 
 const user = computed(() => {
@@ -27,11 +27,11 @@ const user = computed(() => {
   };
 });
 function send_message() {
-  store.send_message_to_room({ ...user.value, message: typing.value });
+  roomService.send_message_to_room({ ...user.value, message: typing.value });
   typing.value = "";
 }
 
 onMounted(() => {
-  store.enter_room(user.value);
+  roomService.enter_room(user.value);
 });
 </script>

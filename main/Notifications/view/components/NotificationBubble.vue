@@ -15,8 +15,9 @@
     </svg>
     <span>{{ notification.description }}</span>
     <div>
-      <button class="btn btn-sm">Deny</button>
-      <button class="btn btn-sm btn-primary">Accept</button>
+      <button class="btn btn-sm btn-primary" @click="notification.onAccept">
+        Accept roleplay
+      </button>
     </div>
   </div>
 </template>
