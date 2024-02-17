@@ -2,19 +2,24 @@ import {
   NotificationService,
   type iNotification,
 } from "../Notifications/NotificationService";
+import { TwaroomService } from "./TwaroomService";
 import {
   WebsocketConnectionService,
   type iWebsocket,
 } from "./WebsocketConnectionService";
-import type { iTwaroom } from "./dtos";
+import type { iTwamessage, iTwaroom } from "./dtos";
 
 export class TwaroomReceiverService {
   public attach() {
     const { get_connection } = WebsocketConnectionService();
     const ws_connection: iWebsocket = get_connection();
     ws_connection.on(
-      "wants_movie_roleplay",
+      "receive_request_roleplay_chat",
       TwaroomReceiverService.on_roleplay_notification
+    );
+    ws_connection.on(
+      "append_message",
+      TwaroomReceiverService.on_append_message
     );
   }
 
@@ -55,6 +60,11 @@ export class TwaroomReceiverService {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  private static async on_append_message(user_message: iTwamessage) {
+    const roomService = new TwaroomService();
+    roomService.append_message_to_current_room(user_message);
   }
 }
 

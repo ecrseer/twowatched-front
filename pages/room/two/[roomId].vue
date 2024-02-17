@@ -21,9 +21,10 @@ const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
+  const MOCK_SENDER_USER_ID = "user-" + `${Math.random()}`.slice(3, 9);
   return {
     room_id: route.params.roomId as string,
-    sender_user_id: "user-" + `${Math.random()}`.slice(3, 9),
+    sender_user_id: MOCK_SENDER_USER_ID,
   };
 });
 function send_message() {
@@ -35,3 +36,4 @@ onMounted(() => {
   roomService.enter_room(user.value);
 });
 </script>
+

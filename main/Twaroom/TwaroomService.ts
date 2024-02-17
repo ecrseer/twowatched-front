@@ -13,7 +13,7 @@ import {
   type iNotification,
 } from "../Notifications/NotificationService";
 import type { iTwaMovie } from "../Movies/interfaces";
-import type { iTwaroom } from "./dtos";
+import type { iTwamessage, iTwaroom } from "./dtos";
 import { TwaroomReceiverService } from "./TwaroomReceiverService";
 
 const TwaroomRepository = defineStore("TwaroomRepository", () => {
@@ -66,9 +66,6 @@ export class TwaroomService {
       );
       this.persistence.current_room = room;
 
-      // socket2.on("append_message", (user_message) => {
-      //   this.persistence.current_room.messages.push(user_message);
-      // });
       const { get_connection } = WebsocketConnectionService();
       const ws_connection: iWebsocket = get_connection();
       ws_connection.emit("enter_room", { room_id, sender_user_id });
@@ -78,14 +75,18 @@ export class TwaroomService {
       console.error(err);
     }
   }
-  public send_message_to_room(user: {
+  public send_message_to_room(user_message: {
     room_id: string;
     sender_user_id: string;
     message: string;
   }) {
     const { get_connection } = WebsocketConnectionService();
     const ws_connection: iWebsocket = get_connection();
-    ws_connection.emit("send_message", user);
+    this.append_message_to_current_room(user_message);
+    ws_connection.emit("send_message", user_message);
+  }
+  public append_message_to_current_room(message: iTwamessage) {
+    this.persistence.current_room.messages.push(message);
   }
 }
 
