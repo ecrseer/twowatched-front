@@ -4,10 +4,10 @@
     v-if="roomService.current_room"
   >
     <ChatMessageBubble
-      v-for="message in roomService.current_room.messages"
-      :key="message.message"
-      :message="message"
-      :isCurrentUser="user.sender_user_id === message.sender_user_id"
+      v-for="msg in roomService.current_room.messages"
+      :key="msg.content"
+      :message="msg"
+      :isCurrentUser="user.sender_user_id === msg.sender_user_id"
     />
   </div>
   <input type="text" v-model="typing" @keyup.enter="send_message" />
@@ -28,7 +28,7 @@ const user = computed(() => {
   };
 });
 function send_message() {
-  roomService.send_message_to_room({ ...user.value, message: typing.value });
+  roomService.send_message_to_room({ ...user.value, content: typing.value });
   typing.value = "";
 }
 

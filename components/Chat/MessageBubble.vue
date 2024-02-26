@@ -16,7 +16,7 @@
     <div class="chat-header">
       {{ props.message.sender_user_id }}
     </div>
-    <div class="chat-bubble">{{ props.message.message }}</div>
+    <div class="chat-bubble">{{ props.message.content }}</div>
     <div class="chat-footer opacity-50">Seen at 12:46</div>
   </div>
 </template>
@@ -28,3 +28,4 @@ const props = defineProps<{
   isCurrentUser?: boolean;
 }>();
 </script>
+

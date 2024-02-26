@@ -7,7 +7,8 @@ import DaisyListVue from "../../components/DaisyList.vue";
 import DaisyInputVue from "../../components/DaisyInput.vue";
 import DaisyMenuVue from "../../components/DaisyMenu.vue";
 import DefaultVue from "../../layouts/default.vue";
-import { MoviesService } from "../../../main/Movies/MoviesServiceimport { MoviesController } from "../../main/Movies/MoviesController";
+import { MoviesService } from "../../../main/Movies/MoviesService
+import { MoviesController } from "../../main/Movies/MoviesController";
 import { mockSearchedMovie } from "./utils";
 
 describe("index page", () => {
@@ -16,7 +17,7 @@ describe("index page", () => {
 
   it("Should movie List component be rendered", async () => {
     const listComponent = mount(DaisyListVue, {
-      props: { items: [{ name: "test1" }] },
+      props: { items: [{ name: "test1",onBadgeClick:async()=>{},icon:'' }] },
     });
 
     expect(listComponent.find("ul").exists()).toBe(true);

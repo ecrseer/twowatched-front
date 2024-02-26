@@ -75,11 +75,7 @@ export class TwaroomService {
       console.error(err);
     }
   }
-  public send_message_to_room(user_message: {
-    room_id: string;
-    sender_user_id: string;
-    message: string;
-  }) {
+  public send_message_to_room(user_message: iTwamessage) {
     const { get_connection } = WebsocketConnectionService();
     const ws_connection: iWebsocket = get_connection();
     this.append_message_to_current_room(user_message);
