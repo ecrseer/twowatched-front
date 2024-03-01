@@ -11,8 +11,8 @@ import type { iTwamessage, iTwaroom } from "./dtos";
 
 export class TwaroomReceiverService {
   public attach() {
-    const { get_connection } = WebsocketConnectionService();
-    const ws_connection: iWebsocket = get_connection();
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
     ws_connection.on(
       "receive_request_roleplay_chat",
       TwaroomReceiverService.on_roleplay_notification
@@ -21,6 +21,20 @@ export class TwaroomReceiverService {
       "append_message",
       TwaroomReceiverService.on_append_message
     );
+    ws_connection.on("disconnect", () => {
+      TwaroomReceiverService.on_disconnect;
+    });
+  }
+  public detach() {
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
+    ws_connection.off("receive_request_roleplay_chat");
+    ws_connection.off("append_message");
+    ws_connection.off("disconnect");
+  }
+
+  private static on_disconnect() {
+    new TwaroomService().enter_room_websocket();
   }
 
   private static async on_roleplay_notification(notification: iNotification) {
@@ -33,7 +47,6 @@ export class TwaroomReceiverService {
   }
 
   private static async on_accept_roleplay() {
-    console.log("🚀 ~ on_accept_roleplay ~ room:");
     const room = await TwaroomReceiverService.create_room();
     if (room) {
       await navigateTo({ path: `/room/two/${room._id}` });

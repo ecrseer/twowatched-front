@@ -14,27 +14,32 @@ export function MoviesController() {
   async function searchMovie() {
     is_fetching_data.value = true;
     const base_url = "https://api.themoviedb.org/3/search/multi";
-    const data = await useFetch(base_url, {
-      method: "get",
-      headers: {
-        accept: "application/json",
-      },
-      query: {
-        query: searching.value,
-        include_adult: true,
-        language: "en-US",
-        page: 1,
-        api_key: configs.public.TMDB_API_KEY,
-      },
-    });
+    let dto: any;
+    try {
+      const data = await useFetch(base_url, {
+        method: "get",
+        headers: {
+          accept: "application/json",
+        },
+        query: {
+          query: searching.value,
+          include_adult: true,
+          language: "en-US",
+          page: 1,
+          api_key: configs.public.TMDB_API_KEY,
+        },
+      });
 
-    const dto = data.data.value as iSearchRequestTmdbMovieDTO;
-    if (dto.results[0]) {
-      currentSearchedMovie.value = dto.results[0];
+      dto = data.data.value as iSearchRequestTmdbMovieDTO;
+      if (dto.results[0]) {
+        currentSearchedMovie.value = dto.results[0];
 
-      movieManager.currentSearchedMovieImage = `url(${TMDB_IMAGE_BASE_URI}${currentSearchedMovie.value.backdrop_path})`;
-    } else {
-      movieManager.currentSearchedMovieImage = ``;
+        movieManager.currentSearchedMovieImage = `url(${TMDB_IMAGE_BASE_URI}${currentSearchedMovie.value.backdrop_path})`;
+      } else {
+        movieManager.currentSearchedMovieImage = ``;
+      }
+    } catch (err) {
+      console.error(err);
     }
     is_fetching_data.value = false;
     return dto;

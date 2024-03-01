@@ -32,12 +32,16 @@ export class TwaroomService {
     const attach = TwaroomRepository();
     this.persistence = attach.persistence;
   }
+  public deconstructor() {
+    this.receiver.detach();
+  }
+
   public get current_room() {
     return this.persistence.current_room;
   }
   public send_roleplay_chat_request(priority: iTwaMovie) {
-    const { get_connection } = WebsocketConnectionService();
-    const ws_connection = get_connection();
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
 
     const moviesList = this.moviesService.getMovies();
     ws_connection.emit("request_roleplay_chat", { priority, moviesList });
@@ -45,8 +49,8 @@ export class TwaroomService {
 
   public async enter_roleplay_notifications_room() {
     const moviesList = this.moviesService.getMovies();
-    const { get_connection } = WebsocketConnectionService();
-    const ws_connection: iWebsocket = get_connection();
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
     const dto: iEnterRoleplayRoomDto = {
       moviesList,
     };
@@ -65,19 +69,23 @@ export class TwaroomService {
         }
       );
       this.persistence.current_room = room;
-
-      const { get_connection } = WebsocketConnectionService();
-      const ws_connection: iWebsocket = get_connection();
-      ws_connection.emit("enter_room", { room_id, sender_user_id });
-
+      this.enter_room_websocket();
       return room;
     } catch (err) {
       console.error(err);
     }
   }
+  public enter_room_websocket() {
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
+    const room_id = this.persistence?.current_room?._id;
+    if (room_id) {
+      ws_connection.emit("enter_room", { room_id });
+    }
+  }
   public send_message_to_room(user_message: iTwamessage) {
-    const { get_connection } = WebsocketConnectionService();
-    const ws_connection: iWebsocket = get_connection();
+    const ws_connection: iWebsocket =
+      WebsocketConnectionService().get_connection();
     this.append_message_to_current_room(user_message);
     ws_connection.emit("send_message", user_message);
   }
