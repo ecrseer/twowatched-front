@@ -40,10 +40,13 @@ export class TwaroomReceiverService {
   private static async on_roleplay_notification(notification: iNotification) {
     const notify_service = new NotificationService();
 
-    notify_service.add_fading_notification({
-      ...notification,
-      onAccept: TwaroomReceiverService.on_accept_roleplay,
-    });
+    notify_service.add_fading_notification(
+      {
+        ...notification,
+        onAccept: TwaroomReceiverService.on_accept_roleplay,
+      },
+      "bottom"
+    );
   }
 
   private static async on_accept_roleplay() {

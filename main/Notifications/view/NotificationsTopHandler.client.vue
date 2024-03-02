@@ -18,8 +18,5 @@ import NotificationBubble from "./components/NotificationBubble.vue";
 
 const notificationService = new NotificationService();
 const roomService = new TwaroomService();
-onMounted(() => {
-  roomService.enter_roleplay_notifications_room();
-});
 </script>
 

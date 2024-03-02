@@ -4,6 +4,7 @@
       class="root_div bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness-50 -z-50"
     ></div>
     <div class="h-full p-12">
+      <NotificationsTopHandlerClient />
       <main class="h-full">
         <slot />
       </main>
@@ -13,7 +14,7 @@
         class="flex flex-col justify-center items-center fixed bottom-0 w-full"
       >
         <DaisyMenu />
-        <NotificationsHandlerClient />
+        <NotificationsBottomHandlerClient />
       </div>
       <div class="fixed bottom-0 right-0 overflow-hidden">
         <div class="badge badge-xs">
@@ -29,10 +30,17 @@
   </div>
 </template>
 <script setup lang="ts">
+import { TwaroomService } from "~/main/Twaroom/TwaroomService";
 import { MoviesService } from "../main/Movies/MoviesService";
-import NotificationsHandlerClient from "../main/Notifications/view/NotificationsHandler.client.vue";
+import NotificationsBottomHandlerClient from "../main/Notifications/view/NotificationsBottomHandler.client.vue";
+import NotificationsTopHandlerClient from "../main/Notifications/view/NotificationsTopHandler.client.vue";
 
 const moviesManager = MoviesService();
+const roomService = new TwaroomService();
+onMounted(() => {
+  console.log("~☠️ ~ onMounted ~ enter_roleplay_notifications_room:");
+  roomService.enter_roleplay_notifications_room();
+});
 </script>
 <style scoped>
 .root_div {
@@ -54,4 +62,4 @@ const moviesManager = MoviesService();
   text-align: center;
 }
 </style>
-../main/Movies/MoviesService
+

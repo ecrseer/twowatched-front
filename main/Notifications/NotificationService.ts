@@ -12,9 +12,15 @@ export interface iNotification {
 }
 
 const NotificationRepository = defineStore("NotificationRepository", () => {
+  function factory() {
+    return {
+      history: [] as iNotification[],
+      current: [] as iNotification[],
+    };
+  }
   const persistence = reactive({
-    history: [] as iNotification[],
-    current: [] as iNotification[],
+    top: factory(),
+    bottom: factory(),
   });
   return { persistence };
 });
@@ -26,16 +32,22 @@ export class NotificationService {
     const data = NotificationRepository();
     this.persistence = data.persistence;
   }
-  get stack() {
-    return this.persistence.current;
+  get bottom_stack() {
+    return this.persistence.bottom.current;
+  }
+  get top_stack() {
+    return this.persistence.top.current;
   }
 
-  public add_fading_notification(notification: iNotification) {
-    this.persistence.history.push(notification);
-    this.persistence.current.unshift(notification);
+  public add_fading_notification(
+    notification: iNotification,
+    location: "top" | "bottom"
+  ) {
+    this.persistence[location].history.push(notification);
+    this.persistence[location].current.unshift(notification);
 
     setTimeout(() => {
-      this.persistence.current.pop();
+      this.persistence[location].current.pop();
     }, 3000);
   }
 }
