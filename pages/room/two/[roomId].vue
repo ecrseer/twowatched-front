@@ -33,7 +33,7 @@ function send_message() {
 }
 
 onMounted(() => {
-  roomService.enter_room(user.value);
+  roomService.enter_twaroom(user.value);
 });
 </script>
 

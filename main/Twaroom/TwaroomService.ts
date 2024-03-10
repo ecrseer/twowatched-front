@@ -58,7 +58,10 @@ export class TwaroomService {
     this.receiver.attach();
   }
 
-  public async enter_room(user: { room_id: string; sender_user_id: string }) {
+  public async enter_twaroom(user: {
+    room_id: string;
+    sender_user_id: string;
+  }) {
     const { room_id, sender_user_id } = user;
     const config = useRuntimeConfig();
     try {

@@ -1,7 +1,7 @@
 <template>
-  <div v-if="notificationService.stack">
+  <div v-if="notificationService.top_stack">
     <NotificationBubble
-      v-for="notification in notificationService.stack"
+      v-for="notification in notificationService.top_stack"
       :key="notification.title"
       :notification="notification"
     />
