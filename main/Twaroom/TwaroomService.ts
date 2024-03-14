@@ -15,6 +15,7 @@ import {
 import type { iTwaMovie } from "../Movies/interfaces";
 import type { iTwamessage, iTwaroom } from "./dtos";
 import { TwaroomReceiverService } from "./TwaroomReceiverService";
+import { UserService } from "../User/UserService";
 
 const TwaroomRepository = defineStore("TwaroomRepository", () => {
   const persistence = reactive({
@@ -48,6 +49,8 @@ export class TwaroomService {
   }
 
   public async enter_roleplay_notifications_room() {
+    UserService.startApp();
+
     const moviesList = this.moviesService.getMovies();
     const ws_connection: iWebsocket =
       WebsocketConnectionService().get_connection();
@@ -86,9 +89,13 @@ export class TwaroomService {
       ws_connection.emit("enter_room", { room_id });
     }
   }
-  public send_message_to_room(user_message: iTwamessage) {
+  public send_message_to_room(user_msg: iTwamessage) {
     const ws_connection: iWebsocket =
       WebsocketConnectionService().get_connection();
+    const user_message: iTwamessage = {
+      ...user_msg,
+      sender_user_id: UserService.getTabUserId(),
+    };
     this.append_message_to_current_room(user_message);
     ws_connection.emit("send_message", user_message);
   }

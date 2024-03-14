@@ -15,13 +15,14 @@
 
 <script lang="ts" setup>
 import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
+import { UserService } from "../../../main/User/UserService";
 
 const roomService = new TwaroomService();
 const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
-  const MOCK_SENDER_USER_ID = "user-" + `${Math.random()}`.slice(3, 9);
+  const MOCK_SENDER_USER_ID = UserService.getTabUserId();
   return {
     room_id: route.params.roomId as string,
     sender_user_id: MOCK_SENDER_USER_ID,
