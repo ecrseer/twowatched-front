@@ -69,7 +69,7 @@ export class TwaroomService {
     const config = useRuntimeConfig();
     try {
       const room = await $fetch<iTwaroom>(
-        `${config.public.BACKEND_URI}/twaroom/${room_id}`,
+        `${config.public.BACKEND_URI}/twaroom/by-id/${room_id}`,
         {
           method: "GET",
         }
