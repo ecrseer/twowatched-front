@@ -24,25 +24,25 @@ export interface iSearchRequestTmdbMovieDTO {
 }
 export interface iTwaMovie extends Partial<iTmdbMovieDTO> {}
 
-interface TmdbProductionCompany {
+export interface TmdbProductionCompany {
   id: number;
   logo_path: string | null;
   name: string;
   origin_country: string;
 }
 
-interface TmdbGenre {
+export interface TmdbGenre {
   id: number;
   name: string;
 }
 
-interface TmdbSpokenLanguage {
+export interface TmdbSpokenLanguage {
   english_name: string;
   iso_639_1: string;
   name: string;
 }
 
-interface TmdbCastMember {
+export interface TmdbCastMember {
   adult: boolean;
   gender: number;
   id: number;
@@ -57,14 +57,14 @@ interface TmdbCastMember {
   order: number;
 }
 
-interface TmdbBelongsToCollection {
+export interface TmdbBelongsToCollection {
   id: number;
   name: string;
   poster_path: string | null;
   backdrop_path: string | null;
 }
 
-interface iTmdbMovieCastCredits {
+export interface iTmdbMovieCastCredits {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: TmdbBelongsToCollection | null;

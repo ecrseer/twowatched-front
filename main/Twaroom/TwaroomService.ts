@@ -37,8 +37,15 @@ export class TwaroomService {
     this.receiver.detach();
   }
 
+  public init() {
+    this.receiver.attach();
+  }
+
   public get current_room() {
     return this.persistence.current_room;
+  }
+  public set current_room(room: iTwaroom) {
+    this.persistence.current_room = room;
   }
   public send_roleplay_chat_request(priority: iTwaMovie) {
     const ws_connection: iWebsocket =
@@ -49,8 +56,6 @@ export class TwaroomService {
   }
 
   public async enter_roleplay_notifications_room() {
-    UserService.startApp();
-
     const moviesList = this.moviesService.getMovies();
     const ws_connection: iWebsocket =
       WebsocketConnectionService().get_connection();
@@ -58,7 +63,6 @@ export class TwaroomService {
       moviesList,
     };
     ws_connection.emit("enter_roleplay_notifications_room", dto);
-    this.receiver.attach();
   }
 
   public async enter_twaroom(user: {

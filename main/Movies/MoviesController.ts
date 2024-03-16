@@ -47,7 +47,7 @@ export function MoviesController() {
 
   function onSearchMovieInput() {
     clearTimeout(bounceSearch);
-    bounceSearch = setTimeout(searchMovie, 1000);
+    // bounceSearch = setTimeout(searchMovie, 1000);
   }
 
   function onClickAddMovieBtn() {
@@ -57,7 +57,7 @@ export function MoviesController() {
       movieManager.addToMoviesList(currentSearchedMovie.value);
     } else {
       movieManager.addToMoviesList(mockSearchedMovie(searching.value));
-      throw new Error("need to search first");
+      // throw new Error("need to search first");
     }
   }
 

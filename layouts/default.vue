@@ -34,11 +34,14 @@ import { TwaroomService } from "~/main/Twaroom/TwaroomService";
 import { MoviesService } from "../main/Movies/MoviesService";
 import NotificationsBottomHandlerClient from "../main/Notifications/view/NotificationsBottomHandler.client.vue";
 import NotificationsTopHandlerClient from "../main/Notifications/view/NotificationsTopHandler.client.vue";
+import { UserService } from "~/main/User/UserService";
 
 const moviesManager = MoviesService();
 const roomService = new TwaroomService();
+
 onMounted(() => {
-  console.log("~☠️ ~ onMounted ~ enter_roleplay_notifications_room:");
+  UserService.startApp();
+  roomService.init();
   roomService.enter_roleplay_notifications_room();
 });
 </script>

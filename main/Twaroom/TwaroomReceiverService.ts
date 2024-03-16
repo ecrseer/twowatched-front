@@ -77,7 +77,10 @@ export class TwaroomReceiverService {
   }
 
   private static async on_accepted_roleplay_enter_room(room: iTwaroom) {
-    await navigateTo({ path: `/room/two/${room._id}` });
+    const roomService = new TwaroomService();
+    roomService.current_room = room;
+    await navigateTo({ path: `/room/choose-character` });
+    // await navigateTo({ path: `/room/two/${room._id}` });
   }
 
   private static async on_append_message(user_message: iTwamessage) {
