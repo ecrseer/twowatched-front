@@ -21,7 +21,7 @@ export const MoviesService = defineStore("MoviesService", () => {
   }
   async function get_movie_characters(movie_id: string) {
     const config = useRuntimeConfig();
-    const characters = await $fetch<iTmdbMovieCastCredits>(
+    const characters = await $fetch<iTmdbMovieCastCredits["credits"]["cast"]>(
       `${config.public.BACKEND_URI}/movies/characters/${movie_id}`,
       {
         method: "GET",

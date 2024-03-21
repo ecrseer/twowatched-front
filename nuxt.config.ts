@@ -18,9 +18,10 @@ export default defineNuxtConfig({
     head: {
       // this htmlAttrs you need
       htmlAttrs: {
-        "data-theme": "valentine",
+        "data-theme": "cupcake",
       },
     },
   },
   modules: ["@pinia/nuxt", "nuxt-vitest", "@nuxt/content", "@nuxt/devtools"],
 });
+

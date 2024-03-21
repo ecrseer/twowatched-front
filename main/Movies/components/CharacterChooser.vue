@@ -4,10 +4,10 @@
       <img class="w-40" :src="character.profile_path" alt="Movie" />
     </figure>
     <div class="card-body">
-      <h2 class="card-title">New movie is released!</h2>
+      <h2 class="card-title">{{ character.character }}</h2>
       <p>Click the button to watch on Jetflix app.</p>
       <div class="card-actions justify-end">
-        <button class="btn btn-primary">Watch</button>
+        <button class="btn btn-primary" @click="emit('choosed')">Watch</button>
       </div>
     </div>
   </div>
@@ -17,6 +17,9 @@ import type { TmdbCastMember } from "../interfaces";
 
 defineProps<{
   character: TmdbCastMember;
+}>();
+const emit = defineEmits<{
+  (e: "choosed", id?: number): void;
 }>();
 </script>
 
