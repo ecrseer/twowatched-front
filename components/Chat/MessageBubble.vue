@@ -8,9 +8,7 @@
   >
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
-        <img
-          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-        />
+        <img :src="image" />
       </div>
     </div>
     <div class="chat-header">
@@ -26,6 +24,7 @@ import type { iTwamessage } from "../../main/Twaroom/dtos";
 const props = defineProps<{
   message: Partial<iTwamessage>;
   isCurrentUser?: boolean;
+  image?: string;
 }>();
 </script>
 

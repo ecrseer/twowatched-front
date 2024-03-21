@@ -3,17 +3,26 @@
     class="flex flex-col justify-between items-stretch overflow-auto"
     v-if="roomService.current_room"
   >
-    <ChatMessageBubble
+    <MessageImageProvider
       v-for="msg in roomService.current_room.messages"
       :key="msg.content"
       :message="msg"
-      :isCurrentUser="user.sender_user_id === msg.sender_user_id"
-    />
+      :usersCharacters="roomService.current_room.usersCharacters"
+    >
+      <template #messageBubble="{ image }">
+        <ChatMessageBubble
+          :message="msg"
+          :isCurrentUser="user.sender_user_id === msg.sender_user_id"
+          :image="image"
+        />
+      </template>
+    </MessageImageProvider>
   </div>
   <input type="text" v-model="typing" @keyup.enter="send_message" />
 </template>
 
 <script lang="ts" setup>
+import MessageImageProvider from "../../../main/Twaroom/components/MessageImageProvider.vue";
 import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 import { UserService } from "../../../main/User/UserService";
 
@@ -22,10 +31,10 @@ const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
-  const MOCK_SENDER_USER_ID = UserService.getTabUserId();
+  const transient_id = UserService.getTabUserId();
   return {
     room_id: route.params.roomId as string,
-    sender_user_id: MOCK_SENDER_USER_ID,
+    sender_user_id: transient_id,
   };
 });
 function send_message() {
