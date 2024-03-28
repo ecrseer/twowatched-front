@@ -15,7 +15,7 @@
       {{ props.message.sender_user_id }}
     </div>
     <div class="chat-bubble">{{ props.message.content }}</div>
-    <div class="chat-footer opacity-50">Seen at 12:46</div>
+    <div v-show="false" class="chat-footer opacity-50">Seen at 12:46</div>
   </div>
 </template>
 <script setup lang="ts">

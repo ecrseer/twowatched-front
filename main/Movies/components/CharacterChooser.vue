@@ -1,13 +1,15 @@
 <template>
   <div class="card card-side bg-base-100 shadow-xl" v-if="character">
     <figure>
-      <img class="w-40" :src="character.profile_path" alt="Movie" />
+      <img class="w-32" :src="character.profile_path" alt="Movie" />
     </figure>
     <div class="card-body">
       <h2 class="card-title">{{ character.character }}</h2>
-      <p>Click the button to watch on Jetflix app.</p>
+      <p>Ator/atriz: {{ character.name }}</p>
       <div class="card-actions justify-end">
-        <button class="btn btn-primary" @click="emit('choosed')">Watch</button>
+        <button class="btn btn-primary" @click="emit('choosed')">
+          Escolher
+        </button>
       </div>
     </div>
   </div>

@@ -1,24 +1,35 @@
 <template>
-  <div
-    class="flex flex-col justify-between items-stretch overflow-auto"
-    v-if="roomService.current_room"
-  >
-    <MessageImageProvider
-      v-for="msg in roomService.current_room.messages"
-      :key="msg.content"
-      :message="msg"
-      :usersCharacters="roomService.current_room.usersCharacters"
+  <div class="roleplay-chat-room">
+    <div
+      class="overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col"
+      v-if="roomService.current_room"
     >
-      <template #messageBubble="{ image }">
-        <ChatMessageBubble
-          :message="msg"
-          :isCurrentUser="user.sender_user_id === msg.sender_user_id"
-          :image="image"
-        />
-      </template>
-    </MessageImageProvider>
+      <MessageImageProvider
+        v-for="msg in roomService.current_room.messages"
+        :key="msg.content"
+        :message="msg"
+        :usersCharacters="roomService.current_room.usersCharacters"
+      >
+        <template #messageBubble="{ image }">
+          <ChatMessageBubble
+            :message="msg"
+            :isCurrentUser="user.sender_user_id === msg.sender_user_id"
+            :image="image"
+          />
+        </template>
+      </MessageImageProvider>
+    </div>
+    <label class="input input-bordered flex items-center gap-2">
+      <input
+        type="text"
+        class="grow"
+        v-model="typing"
+        @keyup.enter="send_message"
+      />
+
+      <kbd class="kbd kbd-sm">Enter</kbd>
+    </label>
   </div>
-  <input type="text" v-model="typing" @keyup.enter="send_message" />
 </template>
 
 <script lang="ts" setup>
@@ -46,4 +57,10 @@ onMounted(() => {
   roomService.enter_twaroom(user.value);
 });
 </script>
+<style scoped>
+.roleplay-chat-room {
+  display: grid;
+  grid-template-rows: 80vh 200px;
+}
+</style>
 
