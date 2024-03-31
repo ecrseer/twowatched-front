@@ -36,6 +36,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { TmdbCastMember } from "../../../main/Movies/interfaces";
 import MessageImageProvider from "../../../main/Twaroom/components/MessageImageProvider.vue";
 import type { iTwamessage } from "../../../main/Twaroom/dtos";
 import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
@@ -57,6 +58,7 @@ const user = computed(() => {
 function send_message() {
   roomService.send_message_to_room({ ...user.value, content: typing.value });
   typing.value = "";
+  refetch_character_if_not_present();
 }
 
 function onAvatarClick(msg: iTwamessage, user_name?: string) {
@@ -66,6 +68,16 @@ function onAvatarClick(msg: iTwamessage, user_name?: string) {
 onMounted(() => {
   roomService.enter_twaroom(route.params.roomId as string);
 });
+
+function refetch_character_if_not_present() {
+  const insufficient_characters =
+    Object.keys(roomService.current_room.usersCharacters).length < 2;
+  if (insufficient_characters) {
+    roomService.enter_twaroom(route.params.roomId as string, {
+      preventWebsocket: true,
+    });
+  }
+}
 </script>
 <style scoped>
 .roleplay-chat-room {
