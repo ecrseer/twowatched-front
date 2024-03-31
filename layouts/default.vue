@@ -13,7 +13,7 @@
       <div
         class="flex flex-col justify-center items-center fixed bottom-0 w-full"
       >
-        <DaisyMenu />
+        <DaisyMenu :user="logged_user" />
         <NotificationsBottomHandlerClient />
       </div>
       <div class="fixed bottom-0 right-0 overflow-hidden">
@@ -38,12 +38,14 @@ import { UserService } from "~/main/User/UserService";
 
 const moviesManager = MoviesService();
 const roomService = new TwaroomService();
+const userService = new UserService();
 
 onMounted(() => {
-  UserService.startApp();
+  userService.startApp();
   roomService.init();
   roomService.enter_roleplay_notifications_room();
 });
+const logged_user = computed(() => userService.getTabUserInfo());
 </script>
 <style scoped>
 .root_div {

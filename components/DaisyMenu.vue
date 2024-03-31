@@ -2,7 +2,7 @@
   <ul class="menu glass menu-horizontal rounded-box">
     <li>
       <NuxtLink to="/">
-        <svg
+        <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
           fill="none"
@@ -15,17 +15,23 @@
             stroke-width="2"
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
-        </svg>
-        List
+        </svg> -->
+        Lista
       </NuxtLink>
     </li>
     <li>
       <a>
-        Inbox
-
+        Mensagens {{ user }}
         <span class="badge badge-sm">99+</span>
       </a>
     </li>
   </ul>
 </template>
+<script setup lang="ts">
+import type { IUser } from "../main/User/interfaces";
+
+defineProps<{
+  user?: IUser;
+}>();
+</script>
 

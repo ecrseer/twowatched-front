@@ -43,12 +43,13 @@ import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 import { UserService } from "../../../main/User/UserService";
 
 const roomService = new TwaroomService();
+const userService = new UserService();
 
 const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
-  const transient_id = UserService.getTabUserInfo()._id;
+  const transient_id = userService.getTabUserInfo()._id;
   return {
     room_id: route.params.roomId as string,
     sender_user_id: transient_id,

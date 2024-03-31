@@ -27,6 +27,7 @@ const TwaroomRepository = defineStore("TwaroomRepository", () => {
 export class TwaroomService {
   private persistence: ReturnType<typeof TwaroomRepository>["persistence"];
   private moviesService = MoviesService();
+  private userService = new UserService();
   private receiver = new TwaroomReceiverService();
 
   constructor() {
@@ -100,7 +101,7 @@ export class TwaroomService {
       WebsocketConnectionService().get_connection();
     const user_message: iTwamessage = {
       ...user_msg,
-      sender_user_id: UserService.getTabUserInfo()._id,
+      sender_user_id: this.userService.getTabUserInfo()._id,
     };
     this.append_message_to_current_room(user_message);
     ws_connection.emit("send_message", user_message);
