@@ -65,11 +65,10 @@ export class TwaroomService {
     ws_connection.emit("enter_roleplay_notifications_room", dto);
   }
 
-  public async enter_twaroom(user: {
-    room_id: string;
-    sender_user_id: string;
-  }) {
-    const { room_id, sender_user_id } = user;
+  public async enter_twaroom(
+    room_id: string,
+    options?: { preventWebsocket?: boolean }
+  ) {
     const config = useRuntimeConfig();
     try {
       const room = await $fetch<iTwaroom>(
@@ -79,12 +78,15 @@ export class TwaroomService {
         }
       );
       this.persistence.current_room = room;
-      this.enter_room_websocket();
+      if (!options?.preventWebsocket) {
+        this.enter_room_websocket();
+      }
       return room;
     } catch (err) {
       console.error(err);
     }
   }
+
   public enter_room_websocket() {
     const ws_connection: iWebsocket =
       WebsocketConnectionService().get_connection();
@@ -98,7 +100,7 @@ export class TwaroomService {
       WebsocketConnectionService().get_connection();
     const user_message: iTwamessage = {
       ...user_msg,
-      sender_user_id: UserService.getTabUserId(),
+      sender_user_id: UserService.getTabUserId()._id,
     };
     this.append_message_to_current_room(user_message);
     ws_connection.emit("send_message", user_message);

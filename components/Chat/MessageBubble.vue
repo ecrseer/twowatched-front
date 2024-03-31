@@ -6,13 +6,13 @@
       'chat-start': !props.isCurrentUser,
     }"
   >
-    <div class="chat-image avatar">
+    <div class="chat-image avatar cursor-pointer" @click="$emit('avatarClick')">
       <div class="w-10 rounded-full">
         <img :src="image" />
       </div>
     </div>
     <div class="chat-header">
-      {{ props.message.sender_user_id }}
+      {{ user_name?.split?.("/")?.[0] || props.message.sender_user_id }}
     </div>
     <div class="chat-bubble">{{ props.message.content }}</div>
     <div v-show="false" class="chat-footer opacity-50">Seen at 12:46</div>
@@ -25,6 +25,7 @@ const props = defineProps<{
   message: Partial<iTwamessage>;
   isCurrentUser?: boolean;
   image?: string;
+  user_name?: string;
 }>();
 </script>
 

@@ -1,15 +1,33 @@
+import type { IUser } from "./interfaces";
+
 export class UserService {
-  public static readonly STORAGE_KEY = "tab_user_id";
+  public static readonly STORAGE_KEY = "logged_user";
   public static startApp() {
-    const tab_user = localStorage?.getItem(UserService.STORAGE_KEY);
+    const tab_user = localStorage?.getItem(
+      UserService.STORAGE_KEY
+    ) as IUser | null;
 
     if (!tab_user) {
-      localStorage?.setItem(UserService.STORAGE_KEY, utilsRandomId());
+      const temp_user: IUser = this.get_factory_temp_user();
+      localStorage?.setItem(UserService.STORAGE_KEY, JSON.stringify(temp_user));
     }
   }
-  public static getTabUserId() {
-    if (typeof window === "undefined") return utilsRandomId();
-    return localStorage?.getItem(UserService.STORAGE_KEY) || utilsRandomId();
+  private static get_factory_temp_user(): IUser {
+    return {
+      _id: utilsRandomId(),
+      email: "email",
+      moviesList: [],
+      name: "temp",
+      password: "temp",
+    };
+  }
+  public static getTabUserId(): IUser {
+    const temp_user = this.get_factory_temp_user();
+
+    if (typeof window === "undefined" || !localStorage) return temp_user;
+
+    const logged_user = localStorage?.getItem(UserService.STORAGE_KEY);
+    return logged_user ? JSON.parse(logged_user) : temp_user;
   }
 }
 

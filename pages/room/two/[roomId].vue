@@ -11,11 +11,13 @@
         :usersCharacters="roomService.current_room.usersCharacters"
         :sendUserId="msg.sender_user_id"
       >
-        <template #messageBubble="{ image }">
+        <template #messageBubble="{ image, user_name }">
           <ChatMessageBubble
             :message="msg"
             :isCurrentUser="user.sender_user_id === msg.sender_user_id"
             :image="image"
+            :user_name="user_name"
+            @avatarClick="() => onAvatarClick(msg, user_name)"
           />
         </template>
       </MessageImageProvider>
@@ -35,27 +37,34 @@
 
 <script lang="ts" setup>
 import MessageImageProvider from "../../../main/Twaroom/components/MessageImageProvider.vue";
+import type { iTwamessage } from "../../../main/Twaroom/dtos";
 import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 import { UserService } from "../../../main/User/UserService";
 
 const roomService = new TwaroomService();
+
 const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
-  const transient_id = UserService.getTabUserId();
+  const transient_id = UserService.getTabUserId()._id;
   return {
     room_id: route.params.roomId as string,
     sender_user_id: transient_id,
   };
 });
+
 function send_message() {
   roomService.send_message_to_room({ ...user.value, content: typing.value });
   typing.value = "";
 }
 
+function onAvatarClick(msg: iTwamessage, user_name?: string) {
+  // navigateTo({path:'/private/'})
+}
+
 onMounted(() => {
-  roomService.enter_twaroom(user.value);
+  roomService.enter_twaroom(route.params.roomId as string);
 });
 </script>
 <style scoped>

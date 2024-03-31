@@ -9,9 +9,9 @@ export class TwaroomChooseCharacterService {
     const config = useRuntimeConfig();
 
     const chat_room = await $fetch<any>(
-      `${
-        config.public.BACKEND_URI
-      }/twaroom/choosed-character/${chat_room_id}/${UserService.getTabUserId()}`,
+      `${config.public.BACKEND_URI}/twaroom/choosed-character/${chat_room_id}/${
+        UserService.getTabUserId()._id
+      }`,
       {
         method: "POST",
         body: cast_member,
