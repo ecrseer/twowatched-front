@@ -1,24 +1,27 @@
 <template>
   <div>
     {{ form_data }}
-    <form>
-      <DaisyInput v-model="form_data.email" :label="'Email'" />
 
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Enter your password"
-      />
+    <DaisyInput v-model="form_data.email" :label="'Email'" />
 
-      <button class="bg-primary" type="submit">Sign In</button>
-    </form>
+    <DaisyInput v-model="form_data.password" :label="'Password'" />
+
+    <button class="bg-primary" type="button" @click="on_click_submit_sign_in">
+      Sign In
+    </button>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
 
-const form_data = ref({ email: "" });
+import { UserService } from "../main/User/UserService";
+import { get_factory_temp_user } from "../main/User/utils";
+import type { IUser } from "../main/User/interfaces";
+
+const form_data = ref<IUser>(get_factory_temp_user());
+
+async function on_click_submit_sign_in() {
+  UserService.sign_in_user(form_data.value);
+}
 </script>
 

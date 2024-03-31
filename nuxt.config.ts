@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     public: {
       BACKEND_URI: process.env.BACKEND_URI,
       TMDB_API_KEY: process.env.TMDB_API_KEY,
+      BACKEND_USERS_URI: process.env.BACKEND_USERS_URI,
     },
   },
   postcss: {

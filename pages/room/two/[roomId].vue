@@ -62,7 +62,7 @@ function send_message() {
 }
 
 function onAvatarClick(msg: iTwamessage, user_name?: string) {
-  // navigateTo({path:'/private/'})
+  navigateTo({ path: "/sign-in/" });
 }
 
 onMounted(() => {
