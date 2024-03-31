@@ -7,7 +7,9 @@ export interface iEnterRoleplayRoomDto {
 }
 
 export const MoviesService = defineStore("MoviesService", () => {
-  const moviesList = ref<iTwaMovie[]>([{ title: "Matrix", id: 123 }]);
+  const moviesList = ref<iTwaMovie[]>([
+    { title: "Spider-Man: No Way Home", id: 123 },
+  ]);
   const currentSearchedMovieImage = ref("");
   const roomService = new TwaroomService();
 

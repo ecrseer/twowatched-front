@@ -9,6 +9,7 @@
         :key="msg.content"
         :message="msg"
         :usersCharacters="roomService.current_room.usersCharacters"
+        :sendUserId="msg.sender_user_id"
       >
         <template #messageBubble="{ image }">
           <ChatMessageBubble
