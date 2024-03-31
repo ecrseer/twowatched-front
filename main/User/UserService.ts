@@ -21,7 +21,7 @@ export class UserService {
       password: "temp",
     };
   }
-  public static getTabUserId(): IUser {
+  public static getTabUserInfo(): IUser {
     const temp_user = this.get_factory_temp_user();
 
     if (typeof window === "undefined" || !localStorage) return temp_user;

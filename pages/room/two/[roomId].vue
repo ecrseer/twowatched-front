@@ -48,7 +48,7 @@ const route = useRoute();
 const typing = ref("");
 
 const user = computed(() => {
-  const transient_id = UserService.getTabUserId()._id;
+  const transient_id = UserService.getTabUserInfo()._id;
   return {
     room_id: route.params.roomId as string,
     sender_user_id: transient_id,
@@ -73,9 +73,7 @@ function refetch_character_if_not_present() {
   const insufficient_characters =
     Object.keys(roomService.current_room.usersCharacters).length < 2;
   if (insufficient_characters) {
-    roomService.enter_twaroom(route.params.roomId as string, {
-      preventWebsocket: true,
-    });
+    location.reload();
   }
 }
 </script>

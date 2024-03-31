@@ -33,7 +33,7 @@ async function choose(character: TmdbCastMember) {
     character
   );
   twaroomService.current_room = room;
-  navigateTo(`/room/two/${room._id}`);
+  navigateTo({ path: `/room/two/${room._id}`, replace: true });
 }
 </script>
 

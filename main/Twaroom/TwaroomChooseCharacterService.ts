@@ -10,7 +10,7 @@ export class TwaroomChooseCharacterService {
 
     const chat_room = await $fetch<any>(
       `${config.public.BACKEND_URI}/twaroom/choosed-character/${chat_room_id}/${
-        UserService.getTabUserId()._id
+        UserService.getTabUserInfo()._id
       }`,
       {
         method: "POST",

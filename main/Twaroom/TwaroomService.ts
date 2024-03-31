@@ -100,7 +100,7 @@ export class TwaroomService {
       WebsocketConnectionService().get_connection();
     const user_message: iTwamessage = {
       ...user_msg,
-      sender_user_id: UserService.getTabUserId()._id,
+      sender_user_id: UserService.getTabUserInfo()._id,
     };
     this.append_message_to_current_room(user_message);
     ws_connection.emit("send_message", user_message);
