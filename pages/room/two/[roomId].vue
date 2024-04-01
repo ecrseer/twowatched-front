@@ -17,7 +17,7 @@
             :isCurrentUser="user.sender_user_id === msg.sender_user_id"
             :image="image"
             :user_name="user_name"
-            @avatarClick="() => onAvatarClick(msg, user_name)"
+            @avatarClick="() => onAvatarClick(msg, msg.sender_user_id)"
           />
         </template>
       </MessageImageProvider>
@@ -41,9 +41,11 @@ import MessageImageProvider from "../../../main/Twaroom/components/MessageImageP
 import type { iTwamessage } from "../../../main/Twaroom/dtos";
 import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 import { UserService } from "../../../main/User/UserService";
+import { PrivateChatService } from "../../../main/PrivateChat/PrivateChatService";
 
 const roomService = new TwaroomService();
 const userService = new UserService();
+const privateChatService = new PrivateChatService();
 
 const route = useRoute();
 const typing = ref("");
@@ -62,8 +64,9 @@ function send_message() {
   refetch_character_if_not_present();
 }
 
-function onAvatarClick(msg: iTwamessage, user_name?: string) {
-  navigateTo({ path: "/sign-in/" });
+async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
+  // navigateTo({ path: "/sign-in/" });
+  privateChatService.start_private_chat({ requested_user_id });
 }
 
 onMounted(() => {
