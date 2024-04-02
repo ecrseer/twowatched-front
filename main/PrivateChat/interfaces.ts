@@ -1,8 +1,8 @@
 import type { iTwamessage } from "../Twaroom/dtos";
 
 export interface IPrivateChat {
-  userOne: string;
-  userTwo: string;
+  _id: string;
+  users: string[];
   messages: iTwamessage[];
   isDeleted?: boolean;
 }

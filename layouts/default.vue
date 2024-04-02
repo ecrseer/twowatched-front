@@ -13,10 +13,10 @@
       <div
         class="flex flex-col justify-center items-center fixed bottom-0 w-full"
       >
-        <DaisyMenu :user="logged_user" />
         <NotificationsBottomHandlerClient />
+        <DaisyMenu :user="logged_user" />
       </div>
-      <div class="fixed bottom-0 right-0 overflow-hidden">
+      <div class="fixed bottom-0 right-0 overflow-hidden" v-show="false">
         <div class="badge badge-xs">
           powered by
 

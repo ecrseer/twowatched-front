@@ -50,6 +50,10 @@ const privateChatService = new PrivateChatService();
 const route = useRoute();
 const typing = ref("");
 
+onMounted(() => {
+  roomService.enter_twaroom(route.params.roomId as string);
+});
+
 const user = computed(() => {
   const transient_id = userService.getTabUserInfo()._id;
   return {
@@ -69,9 +73,7 @@ async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
   privateChatService.start_private_chat({ requested_user_id });
 }
 
-onMounted(() => {
-  roomService.enter_twaroom(route.params.roomId as string);
-});
+
 
 function refetch_character_if_not_present() {
   const insufficient_characters =
