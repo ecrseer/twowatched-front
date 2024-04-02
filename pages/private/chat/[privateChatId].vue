@@ -39,7 +39,6 @@ import { PrivateChatService } from "../../../main/PrivateChat/PrivateChatService
 
 const privateChatService = new PrivateChatService();
 const userService = new UserService();
-const mock_room_service = new TwaroomService();
 
 const route = useRoute();
 const typing = ref("");

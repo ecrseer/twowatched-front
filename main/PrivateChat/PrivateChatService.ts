@@ -35,10 +35,14 @@ export class PrivateChatService {
   }
 
   public receiver_attach() {
-    // ws_connection.on(
-    //   "append_message",
-    //   TwaroomReceiverService.on_append_message
-    // );
+    const ws_connection: iWebsocket =
+      UsersWebsocketConnectionService().get_connection();
+
+    ws_connection.on("append_message_private_chat", this.on_append_message);
+  }
+
+  private on_append_message(room: IPrivateChat) {
+    this.current_room = room;
   }
 
   public start_private_chat(users: { requested_user_id: string }) {
@@ -77,7 +81,7 @@ export class PrivateChatService {
       "send_message_private_chat",
       user_message,
       (response: IPrivateChat) => {
-        console.log("~☠️ ~ enter_private_chat:", response);
+        console.log("~☠️ ~ send_message_private_chat:", response);
         this.current_room = response;
       }
     );
