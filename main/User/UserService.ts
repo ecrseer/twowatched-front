@@ -62,7 +62,6 @@ export class UserService {
         method: "POST",
         body: user,
       });
-      console.log("~☠️ ~ UserService ~ created:", created);
       this.persistence.set_logged_user(created);
       if (options?.goingTo) {
         navigateTo(options.goingTo);

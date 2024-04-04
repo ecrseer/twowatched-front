@@ -8,8 +8,10 @@
       v-if="privateChatService.current_room"
     >
       <ChatMessageBubble
-        v-for="msg in privateChatService.current_room.messages"
-        :key="msg.content"
+        v-for="(msg, index) in privateChatService.current_room.messages.slice(
+          -7
+        )"
+        :key="`${msg.content}-${index}`"
         :message="msg"
         :isCurrentUser="user.sender_user_id === msg.sender_user_id"
         :image="'image'"
@@ -30,14 +32,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { TmdbCastMember } from "../../../main/Movies/interfaces";
-import MessageImageProvider from "../../../main/Twaroom/components/MessageImageProvider.vue";
-import type { iTwamessage } from "../../../main/Twaroom/dtos";
-import { TwaroomService } from "../../../main/Twaroom/TwaroomService";
 import { UserService } from "../../../main/User/UserService";
 import { PrivateChatService } from "../../../main/PrivateChat/PrivateChatService";
 
 const privateChatService = new PrivateChatService();
+
 const userService = new UserService();
 
 const route = useRoute();

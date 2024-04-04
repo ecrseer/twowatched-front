@@ -3,7 +3,7 @@
     <li>
       <NuxtLink to="/"> Lista </NuxtLink>
     </li>
-    <li>
+    <li @click="navigateTo({ path: `/private/chats` })">
       <a>
         Mensagens {{ user?._id }}
         <span class="badge badge-sm">99+</span>

@@ -11,12 +11,16 @@ import {
 } from "../User/UsersWebsocketConnectionService";
 import type { iTwamessage } from "../Twaroom/dtos";
 
-const PrivateChatRepository = defineStore("PrivateChatRepository", () => {
-  const persistence = reactive({
-    current_room: {} as IPrivateChat,
-  });
-  return { persistence };
-});
+export const PrivateChatRepository = defineStore(
+  "PrivateChatRepository",
+  () => {
+    const persistence = reactive({
+      all_rooms: {} as Record<string, IPrivateChat>,
+      selected_room_id: "",
+    });
+    return { persistence };
+  }
+);
 
 export class PrivateChatService {
   private persistence: ReturnType<typeof PrivateChatRepository>["persistence"];
@@ -28,16 +32,20 @@ export class PrivateChatService {
     this.persistence = attach.persistence;
   }
   public get current_room() {
-    return this.persistence.current_room;
+    return this.persistence.all_rooms[this.persistence.selected_room_id];
   }
   public set current_room(room: IPrivateChat) {
-    this.persistence.current_room = room;
+    if (!this.persistence.selected_room_id) {
+      this.persistence.selected_room_id = room._id;
+    }
+    this.persistence.all_rooms[this.persistence.selected_room_id] = room;
   }
 
   public receiver_attach() {
     const ws_connection: iWebsocket =
       UsersWebsocketConnectionService().get_connection();
 
+    // ws_connection.off("append_message_private_chat");
     ws_connection.on(
       "append_message_private_chat",
       this.on_append_message.bind(this)
@@ -46,11 +54,7 @@ export class PrivateChatService {
 
   private on_append_message(room: IPrivateChat) {
     console.log("~☠️ ~ PrivateChatService ~ on_append_message ~ room:", room);
-    const new_msg =
-      room.messages?.length !== this.current_room.messages?.length;
-    if (new_msg) {
-      this.current_room = room;
-    }
+    this.persistence.all_rooms[room._id] = room;
   }
 
   public start_private_chat(users: { requested_user_id: string }) {
@@ -62,7 +66,6 @@ export class PrivateChatService {
     };
 
     ws_connection.emit("start_private_chat", dto, (response: IPrivateChat) => {
-      // console.log("~☠️ ~ start_private_chat:", response);
       navigateTo({ path: `/private/chat/${response._id}`, replace: true });
     });
   }
@@ -75,7 +78,7 @@ export class PrivateChatService {
       "enter_private_chat",
       priv_chat_id,
       (response: IPrivateChat) => {
-        this.current_room = response;
+        this.persistence.all_rooms[response._id] = response;
         this.receiver_attach.bind(this)();
       }
     );
@@ -89,8 +92,7 @@ export class PrivateChatService {
       "send_message_private_chat",
       user_message,
       (response: IPrivateChat) => {
-        // console.log("~☠️ ~ send_message_private_chat:", response);
-        this.current_room = response;
+        this.persistence.all_rooms[response._id] = response;
       }
     );
   }
