@@ -38,11 +38,19 @@ export class PrivateChatService {
     const ws_connection: iWebsocket =
       UsersWebsocketConnectionService().get_connection();
 
-    ws_connection.on("append_message_private_chat", this.on_append_message);
+    ws_connection.on(
+      "append_message_private_chat",
+      this.on_append_message.bind(this)
+    );
   }
 
   private on_append_message(room: IPrivateChat) {
-    this.current_room = room;
+    console.log("~☠️ ~ PrivateChatService ~ on_append_message ~ room:", room);
+    const new_msg =
+      room.messages?.length !== this.current_room.messages?.length;
+    if (new_msg) {
+      this.current_room = room;
+    }
   }
 
   public start_private_chat(users: { requested_user_id: string }) {
@@ -54,7 +62,7 @@ export class PrivateChatService {
     };
 
     ws_connection.emit("start_private_chat", dto, (response: IPrivateChat) => {
-      console.log("~☠️ ~ start_private_chat:", response);
+      // console.log("~☠️ ~ start_private_chat:", response);
       navigateTo({ path: `/private/chat/${response._id}`, replace: true });
     });
   }
@@ -67,8 +75,8 @@ export class PrivateChatService {
       "enter_private_chat",
       priv_chat_id,
       (response: IPrivateChat) => {
-        console.log("~☠️ ~ enter_private_chat:", response);
         this.current_room = response;
+        this.receiver_attach.bind(this)();
       }
     );
   }
@@ -81,7 +89,7 @@ export class PrivateChatService {
       "send_message_private_chat",
       user_message,
       (response: IPrivateChat) => {
-        console.log("~☠️ ~ send_message_private_chat:", response);
+        // console.log("~☠️ ~ send_message_private_chat:", response);
         this.current_room = response;
       }
     );
