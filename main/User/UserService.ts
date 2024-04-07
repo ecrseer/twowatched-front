@@ -35,6 +35,10 @@ export class UserService {
         this.persistence = attach.getset;
     }
 
+    public logout() {
+        this.persistence.set_logged_user(get_factory_temp_user())
+    }
+
     public startApp() {
         const user_str = localStorage?.getItem(STORAGE_KEY);
         const user: IUser = user_str
@@ -96,14 +100,15 @@ export class UserService {
     public async add_movies_to_current_user(movies: iTwaMovie[]) {
 
         let user = this.getTabUserInfo();
-        const moviesIds = movies.map(m => m._id)
+        const moviesIds = movies.map(m => m._id) as string[]
         user.moviesList.push(...moviesIds);
         this.setTabUserInfo(user);
 
 
         if (this.is_real_user(user)) {
-            // return this.save_movies_on_user(user);
+            return this.save_movies_on_user(user);
         }
+        return user;
     }
 
     private async save_movies_on_user(user: IUser) {

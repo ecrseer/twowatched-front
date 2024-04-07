@@ -7,14 +7,15 @@
   </header>
   <div class="h-full w-full font-sans">
     <div
-        class="root_div bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness-50 -z-50"
+        class="current-searched-movie-image bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness -z-50"
+        v-if="true"
     ></div>
     <div class="h-full p-12">
 
       <NotificationsTopHandlerClient/>
       <main class="h-full">
         <slot/>
-        
+
       </main>
     </div>
     <footer>
@@ -56,7 +57,7 @@ onMounted(() => {
 const logged_user = computed(() => userService.getTabUserInfo());
 </script>
 <style scoped>
-.root_div {
+.current-searched-movie-image {
   background-image: v-bind("moviesManager.currentSearchedMovieImage");
 }
 

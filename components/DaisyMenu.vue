@@ -1,6 +1,7 @@
 <template>
 
-  <div class="navbar bg-base-content/80 min-h-0 p-0 ">
+  <div class="navbar bg-base-content/80 min-h-0 p-0  "
+  >
     <div class="navbar-start">
       <a class="btn btn-ghost text-xl  ">
         <DaisyThemeSwitcher/>
@@ -14,12 +15,15 @@
         <DaisyNuxtLink :href="'/private/chats'">
           Mensagens
         </DaisyNuxtLink>
-        <DaisyNuxtLink :href="'/user-profile'" v-if="is_real_user">
-          Perfil
-        </DaisyNuxtLink>
+        <template v-if="is_real_user">
+          <DaisyNuxtLink :href="'/user-profile'">
+            Perfil
+          </DaisyNuxtLink>
+        </template>
         <DaisyNuxtLink :href="'/sign-in'" v-else>
           Cadastrar
         </DaisyNuxtLink>
+
 
       </div>
     </div>
@@ -38,7 +42,9 @@ import type {IUser} from "../main/User/interfaces";
 import DaisyThemeSwitcher from "~/components/DaisyThemeSwitcher.vue";
 import DaisyNuxtLink from "~/components/DaisyNuxtLink.vue";
 import {UserService} from "~/main/User/UserService";
+import {MoviesService} from "~/main/Movies/MoviesService";
 
+const movieService = MoviesService()
 
 const props = defineProps<{
   user?: IUser;
@@ -47,5 +53,14 @@ const route = useRoute()
 const is_real_user = computed(() => new UserService().is_real_user(props.user))
 const current_route = computed(() => route.path)
 
+function logout() {
+  new UserService().logout()
+}
 </script>
+
+<style scoped>
+.searched_movie_image {
+  background-image: v-bind("movieService.currentSearchedMovieImage");
+}
+</style>
 

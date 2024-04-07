@@ -13,6 +13,7 @@
         <p class="">
           Criado em: {{ new Date(user.createdAt).toLocaleDateString() }}
         </p>
+
         <button class="btn mt-5 btn-primary">Editar</button>
       </div>
       <img :src="user_img"

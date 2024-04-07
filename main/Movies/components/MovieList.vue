@@ -34,5 +34,10 @@ async function create_or_go_to_room(movie: iTwaMovie) {
   await roomService.send_roleplay_chat_request(movie);
   //   await navigateTo({ path: `/room/two/${room._id}` });
 }
+
+onMounted(async () => {
+  const user = await userService.getTabUserInfo();
+  await moviesService.fetch_movies_from_user(user);
+})
 </script>
 

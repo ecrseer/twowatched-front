@@ -3,24 +3,29 @@ import {reactive, ref} from "vue";
 import type {iTmdbMovieCastCredits, iTwaMovie} from "./interfaces";
 import {TwaroomService} from "../Twaroom/TwaroomService";
 import {UserService} from "~/main/User/UserService";
+import type {IUser} from "~/main/User/interfaces";
 
 export interface iEnterRoleplayRoomDto {
     moviesList: iTwaMovie[];
 }
 
+type IMovie_ID = string;
 export const MoviesService = defineStore("MoviesService", () => {
     const currentSearchedMovieImage = ref("");
     const roomService = new TwaroomService();
     const userService = new UserService();
+    const recent_searches = ref<Record<IMovie_ID, iTwaMovie>>({});
 
 
     async function addToMoviesList(movie: iTwaMovie) {
-        userService.add_movies_to_current_user([movie]);
-        roomService.enter_roleplay_notifications_room();
+        const user = await userService.add_movies_to_current_user([movie]);
+
+        await fetch_movies_from_user(user);
+        await roomService.enter_roleplay_notifications_room();
     }
 
     function getMovies() {
-        return userService.getTabUserInfo().moviesList;
+        return userService.getTabUserInfo().moviesList.map((movie_id) => recent_searches.value[movie_id]);
     }
 
     async function get_movie_characters(movie_id: string) {
@@ -34,11 +39,27 @@ export const MoviesService = defineStore("MoviesService", () => {
         return characters;
     }
 
+    async function fetch_movies_from_user(user: IUser) {
+        const config = useRuntimeConfig();
+        const movies = await $fetch<iTwaMovie[]>(`${config.public.BACKEND_URI}/movies/by-ids`, {
+            method: "POST",
+            body: {ids: user.moviesList},
+        });
+
+        for (const movie of movies) {
+            const movie_id = movie._id as string
+            recent_searches.value[movie_id] = movie;
+        }
+        return movies;
+    }
+
     return {
         addToMoviesList,
         currentSearchedMovieImage,
+        recent_searches,
         getMovies,
         get_movie_characters,
+        fetch_movies_from_user
     };
 });
 

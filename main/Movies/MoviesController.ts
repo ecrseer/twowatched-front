@@ -28,28 +28,13 @@ export function MoviesController() {
 
             console.log("=>(MoviesController.ts:34) dto", movie);
 
-            // const data = await useFetch(base_url, {
-            //     method: "get",
-            //     headers: {
-            //         accept: "application/json",
-            //     },
-            //     query: {
-            //         query: searching.value,
-            //         include_adult: true,
-            //         language: "en-US",
-            //         page: 1,
-            //         api_key: configs.public.TMDB_API_KEY,
-            //     },
-            // });
-// dto = data.data.value as iSearchRequestTmdbMovieDTO;
 
-            // if (dto.results[0]) {
-            //   currentSearchedMovie.value = dto.results[0];
-            //
-            //   movieManager.currentSearchedMovieImage = `url(${TMDB_IMAGE_BASE_URI}${currentSearchedMovie.value.backdrop_path})`;
-            // } else {
-            //   movieManager.currentSearchedMovieImage = ``;
-            // }
+            if (movie) {
+                currentSearchedMovie.value = movie;
+                movieManager.currentSearchedMovieImage = `url(${TMDB_IMAGE_BASE_URI}${movie?.backdrop_path || movie?.poster_path})`;
+            } else {
+                movieManager.currentSearchedMovieImage = ``;
+            }
         } catch (err) {
             console.error(err);
         }
