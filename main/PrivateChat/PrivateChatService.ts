@@ -45,6 +45,10 @@ export class PrivateChatService {
         this.persistence.all_rooms[this.persistence.selected_room_id] = room;
     }
 
+    public set_current_room_id(id: string) {
+        this.persistence.selected_room_id = id;
+    }
+
     public get all_rooms() {
         return this.persistence.all_rooms;
     }

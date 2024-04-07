@@ -19,7 +19,7 @@ export default defineNuxtConfig({
         head: {
             // this htmlAttrs you need
             htmlAttrs: {
-                "data-theme": "emerald",
+                "data-theme": "garden",
             },
         },
     },

@@ -14,7 +14,7 @@
       <NotificationsTopHandlerClient/>
       <main class="h-full">
         <slot/>
-        <div style="height: 50px"></div>
+        
       </main>
     </div>
     <footer>

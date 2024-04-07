@@ -1,7 +1,7 @@
 <template>
 
   <div class="flex flex-col h-full gap-1 justify-between items-stretch">
-    <!-- <div class="text-3xl">Seus interesses</div> -->
+
     <div class="flex flex-col items-center">
       <ChatsList :all_rooms="all_rooms"/>
 

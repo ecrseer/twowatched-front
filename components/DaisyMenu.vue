@@ -1,16 +1,28 @@
 <template>
 
-  <div class="navbar bg-base-100 ">
+  <div class="navbar bg-base-cont2ent min-h-0 p-0 ">
     <div class="navbar-start">
-      <a class="btn btn-ghost text-xl hidden">Twowatch</a>
+      <a class="btn btn-ghost text-xl  ">
+        <DaisyThemeSwitcher/>
+      </a>
     </div>
     <div class="navbar-center flex">
-      <div role="tablist" class="tabs tabs-lifted">
-
-
-        <NuxtLink class="tab tab-active" to="/"> Lista</NuxtLink>
-        <NuxtLink class="tab [--tab-bg:yellow] [--tab-border-color:orange]" to="/private/chats"> Mensagens</NuxtLink>
-        <NuxtLink class="tab" to="/sign-in"> Cadastrar</NuxtLink>
+      <div role="tablist" class="tabs tabs-lifted tabs-lg">
+        <NuxtLink class="tab "
+                  :class="{'tab-active   ':current_route==='/'}"
+                  to="/">
+          <p class="text-sm">Lista</p>
+        </NuxtLink>
+        <NuxtLink class="tab  "
+                  :class="{'tab-active   ':current_route==='/private/chats'}"
+                  to="/private/chats">
+          <p class="text-sm">Mensagens</p>
+        </NuxtLink>
+        <NuxtLink class="tab  "
+                  :class="{'tab-active   ':current_route==='/sign-in'}"
+                  to="/sign-in">
+          <p class="text-sm">Cadastrar</p>
+        </NuxtLink>
       </div>
     </div>
     <div class="navbar-end">
@@ -20,7 +32,10 @@
 </template>
 <script setup lang="ts">
 import type {IUser} from "../main/User/interfaces";
+import DaisyThemeSwitcher from "~/components/DaisyThemeSwitcher.vue";
 
+const route = useRoute()
+const current_route = computed(() => route.path)
 defineProps<{
   user?: IUser;
 }>();
