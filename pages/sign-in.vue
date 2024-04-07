@@ -11,7 +11,7 @@
           <DaisyInput v-model="form_data.name" :label="'Nome'"/>
           <DaisyInput v-model="form_data.email" :label="'Email'"/>
 
-          <DaisyInput v-model="form_data.password" :label="'Password'"/>
+          <DaisyInput type="password" v-model="form_data.password" :label="'Password'"/>
 
 
           <button
@@ -30,6 +30,7 @@ import {ref} from "vue";
 import {UserService} from "../main/User/UserService";
 import {get_factory_temp_user} from "../main/User/utils";
 import type {IUser} from "../main/User/interfaces";
+import {NotificationService} from "~/main/Notifications/NotificationService";
 
 const userService = new UserService();
 
@@ -37,7 +38,19 @@ const form_data = ref<IUser>(get_factory_temp_user());
 
 async function on_click_submit_sign_in() {
   // UserService.sign_in_user(form_data.value, { goingTo: "/private/messages" });
-  userService.sign_in_user(form_data.value);
+  const created = await userService.sign_in_user(form_data.value);
+  if (!created) return;
+
+  const notify_service = new NotificationService();
+
+  notify_service.add_fading_notification(
+      {
+        title: 'Conta criada',
+        description: `Sua conta foi criada e logada com sucesso! Bem vindo(a) ${created.name}!`,
+      },
+      "bottom"
+  );
+  navigateTo('/')
 }
 </script>
 

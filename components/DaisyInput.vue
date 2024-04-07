@@ -1,18 +1,18 @@
 <template>
   <div class="relative float-label-input">
     <input
-      type="text"
-      id="name"
-      :modelVal="props.modelValue"
-      :value="props.modelValue"
-      @input="emit('update:modelValue', $event.target?.value)"
-      class="w-full focus:outline-none glass text-primary-focus focus:shadow-outline border border-gray-300 rounded-md py-3 px-3 block appearance-none leading-normal focus:border-fuchsia-400"
+        :type="input_opts.type"
+        id="name"
+        :modelVal="props.modelValue"
+        :value="props.modelValue"
+        @input="emit('update:modelValue', $event.target?.value)"
+        class="w-full focus:outline-none glass text-primary-focus focus:shadow-outline border border-gray-300 rounded-md py-3 px-3 block appearance-none leading-normal focus:border-fuchsia-400"
     />
 
     <label
-      for="name"
-      class="absolute top-3 left-0 text-gray-400 pointer-events-none transition duration-200 ease-in-outbg-white px-2 text-grey-darker"
-      >{{ props.label }}</label
+        for="name"
+        class="absolute top-3 left-0 text-gray-400 pointer-events-none transition duration-200 ease-in-outbg-white px-2 text-grey-darker"
+    >{{ props.label }}</label
     >
   </div>
 </template>
@@ -20,7 +20,15 @@
 const props = defineProps<{
   modelValue: string;
   label: string;
+  type?: string;
 }>();
+
+const input_opts = computed(() => {
+  return {
+    type: props.type || "text",
+  }
+
+})
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
@@ -30,6 +38,7 @@ const emit = defineEmits<{
 .float-label-input {
   margin: 32px 0;
 }
+
 label {
   height: 1rem;
   display: flex;
