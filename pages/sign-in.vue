@@ -8,14 +8,17 @@
       <div class="card lg:card-side bg-base-100 shadow-xl">
 
         <div class="card-body">
-          <DaisyInput v-model="form_data.email" :label="'Email'"/>
+          <DaisyInput v-model="form_data.name" :label="'Nome'"/>
           <DaisyInput v-model="form_data.email" :label="'Email'"/>
 
           <DaisyInput v-model="form_data.password" :label="'Password'"/>
 
-          <button class="bg-primary" type="button" @click="on_click_submit_sign_in">
-            Sign In
+
+          <button
+              @click="on_click_submit_sign_in"
+              class="btn btn-active btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg">Sign In
           </button>
+
         </div>
       </div>
     </div>

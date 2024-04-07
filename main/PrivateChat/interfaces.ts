@@ -8,3 +8,8 @@ export interface IPrivateChat {
 }
 
 export type IAllRooms = Record<string, IPrivateChat>
+
+
+export interface IUserTwaMessageDto extends iTwamessage {
+    sender_user_name: string;
+}

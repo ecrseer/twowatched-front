@@ -8,14 +8,11 @@
         v-if="privateChatService.current_room"
     >
       <ChatMessageBubble
-          v-for="(msg, index) in privateChatService.current_room.messages.slice(
-          -7
-        )"
+          v-for="(msg, index) in current_messages"
           :key="`${msg.content}-${index}`"
           :message="msg"
           :isCurrentUser="user.sender_user_id === msg.sender_user_id"
-          :image="'image'"
-          :user_name="msg?.sender_user_id"
+          :user_name="msg?.sender_user_name"
       />
     </section>
     <label class="input input-bordered flex items-center gap-2">
@@ -34,6 +31,7 @@
 <script lang="ts" setup>
 import {UserService} from "../../../main/User/UserService";
 import {PrivateChatService} from "../../../main/PrivateChat/PrivateChatService";
+import type {IUserTwaMessageDto} from "~/main/PrivateChat/interfaces";
 
 const privateChatService = new PrivateChatService();
 
@@ -48,7 +46,9 @@ onMounted(() => {
   privateChatService.set_current_room_id(room_id);
   privateChatService.enter_private_chat(route.params.privateChatId as string);
 });
-
+const current_messages = computed(() => {
+  return privateChatService.current_room.messages as IUserTwaMessageDto[]
+})
 const user = computed(() => {
   const transient_id = userService.getTabUserInfo()._id;
   return {

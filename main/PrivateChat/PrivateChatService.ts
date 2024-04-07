@@ -11,6 +11,7 @@ import {
 } from "../User/UsersWebsocketConnectionService";
 import type {iTwamessage} from "../Twaroom/dtos";
 import index from "~/pages/index.vue";
+import type {IUser} from "~/main/User/interfaces";
 
 
 export const PrivateChatRepository = defineStore(
@@ -132,6 +133,7 @@ export class PrivateChatService {
             }
         );
     }
+
 
 }
 

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="navbar bg-base-cont2ent min-h-0 p-0 ">
+  <div class="navbar bg-base-content min-h-0 p-0 ">
     <div class="navbar-start">
       <a class="btn btn-ghost text-xl  ">
         <DaisyThemeSwitcher/>
