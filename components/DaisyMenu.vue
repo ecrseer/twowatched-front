@@ -1,6 +1,6 @@
 <template>
 
-  <div class="navbar bg-base-content min-h-0 p-0 ">
+  <div class="navbar bg-base-content/80 min-h-0 p-0 ">
     <div class="navbar-start">
       <a class="btn btn-ghost text-xl  ">
         <DaisyThemeSwitcher/>
@@ -8,36 +8,44 @@
     </div>
     <div class="navbar-center flex">
       <div role="tablist" class="tabs tabs-lifted tabs-lg">
-        <NuxtLink class="tab "
-                  :class="{'tab-active   ':current_route==='/'}"
-                  to="/">
-          <p class="text-sm">Lista</p>
-        </NuxtLink>
-        <NuxtLink class="tab  "
-                  :class="{'tab-active   ':current_route==='/private/chats'}"
-                  to="/private/chats">
-          <p class="text-sm">Mensagens</p>
-        </NuxtLink>
-        <NuxtLink class="tab  "
-                  :class="{'tab-active   ':current_route==='/sign-in'}"
-                  to="/sign-in">
-          <p class="text-sm">Cadastrar</p>
-        </NuxtLink>
+        <DaisyNuxtLink :href="'/'">
+          Lista
+        </DaisyNuxtLink>
+        <DaisyNuxtLink :href="'/private/chats'">
+          Mensagens
+        </DaisyNuxtLink>
+        <DaisyNuxtLink :href="'/user-profile'" v-if="is_real_user">
+          Perfil
+        </DaisyNuxtLink>
+        <DaisyNuxtLink :href="'/sign-in'" v-else>
+          Cadastrar
+        </DaisyNuxtLink>
+
       </div>
     </div>
     <div class="navbar-end">
-      <a class="btn hidden">Help</a>
+      <section role="tablist" class="tabs tabs-lifted tabs-lg rotate-180 scale-125	" v-if="user?.name">
+        <div class="tab tab-active text-base-content/80">
+          <span class="rotate-180 text-xs">{{ user?.name }}</span>
+        </div>
+      </section>
+
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import type {IUser} from "../main/User/interfaces";
 import DaisyThemeSwitcher from "~/components/DaisyThemeSwitcher.vue";
+import DaisyNuxtLink from "~/components/DaisyNuxtLink.vue";
+import {UserService} from "~/main/User/UserService";
 
-const route = useRoute()
-const current_route = computed(() => route.path)
-defineProps<{
+
+const props = defineProps<{
   user?: IUser;
 }>();
+const route = useRoute()
+const is_real_user = computed(() => new UserService().is_real_user(props.user))
+const current_route = computed(() => route.path)
+
 </script>
 

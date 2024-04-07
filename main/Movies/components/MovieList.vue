@@ -1,18 +1,20 @@
 <template>
   <div>
-    <DaisyList :items="movieItems" />
+    <DaisyList :items="movieItems"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { iDaisyListItem } from "../../../components/DaisyList.vue";
-import { TwaroomService } from "../../Twaroom/TwaroomService";
-import { MoviesService } from "../MoviesService";
+import type {iDaisyListItem} from "../../../components/DaisyList.vue";
+import {TwaroomService} from "../../Twaroom/TwaroomService";
+import {MoviesService} from "../MoviesService";
 
-import type { iTwaMovie } from "../interfaces";
+import type {iTwaMovie} from "../interfaces";
+import {UserService} from "~/main/User/UserService";
 
 const moviesService = MoviesService();
 const roomService = new TwaroomService();
+const userService = new UserService();
 
 const movieItems = computed(() => {
   const movies = moviesService.getMovies();

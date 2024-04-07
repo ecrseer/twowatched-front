@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import type {IUser} from "./interfaces";
 import {get_factory_temp_user} from "./utils";
 import {utilsAwaitUntil} from "~/utils/common";
+import type {iTwaMovie} from "~/main/Movies/interfaces";
 
 export const STORAGE_KEY = "logged_user" as const;
 
@@ -57,11 +58,19 @@ export class UserService {
         return logged_user || temp_user;
     }
 
+    public setTabUserInfo(user: IUser) {
+        this.persistence.set_logged_user(user);
+    }
+
+    public is_real_user(user: IUser) {
+        const REAL_USER_ID_MODEL = 'X609e7cxf6baXb0feX7d7X1a'
+        return user._id?.length === REAL_USER_ID_MODEL?.length
+    }
+
     public async tryGetRealUser() {
         const user = this.getTabUserInfo()
-        const REAL_USER_ID_MODEL = 'X609e7cxf6baXb0feX7d7X1a'
 
-        const real = await utilsAwaitUntil(() => this.getTabUserInfo()._id?.length === REAL_USER_ID_MODEL?.length, {maxTries: 3});
+        const real = await utilsAwaitUntil(() => this.is_real_user(this.getTabUserInfo()), {maxTries: 3});
         if (real) return this.getTabUserInfo();
         return null;
     }
@@ -83,5 +92,30 @@ export class UserService {
             console.log("~☠️ ~ UserService ~ sign_in_user ~ err:", err);
         }
     }
+
+    public async add_movies_to_current_user(movies: iTwaMovie[]) {
+
+        let user = this.getTabUserInfo();
+        const moviesIds = movies.map(m => m._id)
+        user.moviesList.push(...moviesIds);
+        this.setTabUserInfo(user);
+
+
+        if (this.is_real_user(user)) {
+            // return this.save_movies_on_user(user);
+        }
+    }
+
+    private async save_movies_on_user(user: IUser) {
+        const config = useRuntimeConfig();
+        const url = `${config.public.BACKEND_USERS_URI}/user/save-movies`;
+        const created = await $fetch<IUser>(url, {
+            method: "PATCH",
+            body: user,
+        });
+        return created;
+    }
+
+
 }
 

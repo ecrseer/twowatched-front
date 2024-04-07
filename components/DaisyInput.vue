@@ -2,7 +2,7 @@
   <div class="relative float-label-input">
     <input
         :type="input_opts.type"
-        id="name"
+        
         :modelVal="props.modelValue"
         :value="props.modelValue"
         @input="emit('update:modelValue', $event.target?.value)"
