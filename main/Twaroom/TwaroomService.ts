@@ -60,12 +60,16 @@ export class TwaroomService {
     }
 
     public async enter_roleplay_notifications_room() {
-        const moviesList = this.moviesService.getMovies();
+        const user = await this.userService.tryGetRealUser()
+        const moviesList = user?.moviesList;
+
+
         if (!moviesList?.length) throw new Error('Cant enter notification movie room')
+
         const ws_connection: iWebsocket =
             WebsocketConnectionService().get_connection();
         const dto: iEnterRoleplayRoomDto = {
-            moviesList,
+            moviesListIds: moviesList,
         };
         ws_connection.emit("enter_roleplay_notifications_room", dto);
     }

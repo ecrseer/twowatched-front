@@ -6,7 +6,7 @@ import {UserService} from "~/main/User/UserService";
 import type {IUser} from "~/main/User/interfaces";
 
 export interface iEnterRoleplayRoomDto {
-    moviesList: iTwaMovie[];
+    moviesListIds: string[];
 }
 
 type IMovie_ID = string;
@@ -25,7 +25,9 @@ export const MoviesService = defineStore("MoviesService", () => {
     }
 
     function getMovies() {
-        return userService.getTabUserInfo().moviesList.map((movie_id) => recent_searches.value[movie_id]);
+        return userService.getTabUserInfo().moviesList
+            .map((movie_id) => recent_searches.value[movie_id])
+            .filter((movie) => !!movie);
     }
 
     async function get_movie_characters(movie_id: string) {
@@ -45,6 +47,7 @@ export const MoviesService = defineStore("MoviesService", () => {
             method: "POST",
             body: {ids: user.moviesList},
         });
+        console.log("=>(MoviesService.ts:48) movies", movies);
 
         for (const movie of movies) {
             const movie_id = movie._id as string

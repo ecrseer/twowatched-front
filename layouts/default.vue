@@ -49,11 +49,7 @@ const moviesManager = MoviesService();
 const roomService = new TwaroomService();
 const userService = new UserService();
 
-onMounted(() => {
-  userService.startApp();
-  roomService.init();
-  roomService.enter_roleplay_notifications_room();
-});
+ 
 const logged_user = computed(() => userService.getTabUserInfo());
 </script>
 <style scoped>
