@@ -45,16 +45,28 @@ import NotificationsBottomHandlerClient from "../main/Notifications/view/Notific
 import NotificationsTopHandlerClient from "../main/Notifications/view/NotificationsTopHandler.client.vue";
 import {UserService} from "~/main/User/UserService";
 
-const moviesManager = MoviesService();
+const moviesService = MoviesService();
 const roomService = new TwaroomService();
 const userService = new UserService();
 
- 
+onMounted(async () => {
+  userService.startApp();
+  console.log("=>(default.vue:54) ");
+
+  let user = await userService.tryGetRealUser();
+  if (!user) {
+    user = userService.getTabUserInfo();
+  }
+  await moviesService.fetch_movies_from_user(user);
+
+  roomService.init();
+  await roomService.enter_roleplay_notifications_room();
+})
 const logged_user = computed(() => userService.getTabUserInfo());
 </script>
 <style scoped>
 .current-searched-movie-image {
-  background-image: v-bind("moviesManager.currentSearchedMovieImage");
+  background-image: v-bind("moviesService.currentSearchedMovieImage");
 }
 
 .hm-text {

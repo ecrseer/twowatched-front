@@ -35,17 +35,6 @@ async function create_or_go_to_room(movie: iTwaMovie) {
   //   await navigateTo({ path: `/room/two/${room._id}` });
 }
 
-onMounted(async () => {
-  userService.startApp();
-  console.log("=>(MovieList.vue:41) fetch_movies_from_user");
-  let user = await userService.tryGetRealUser();
-  if (!user) {
-    user = await userService.getTabUserInfo();
-  }
-  await moviesService.fetch_movies_from_user(user);
 
-  roomService.init();
-  await roomService.enter_roleplay_notifications_room();
-})
 </script>
 
