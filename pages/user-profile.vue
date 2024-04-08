@@ -14,7 +14,7 @@
           Criado em: {{ new Date(user.createdAt).toLocaleDateString() }}
         </p>
 
-        <button class="btn mt-5 btn-primary">Editar</button>
+        <button class="btn mt-5 btn-primary" @click="()=>userService.edit_user(user)">Editar</button>
       </div>
       <img :src="user_img"
            class="max-w-sm rounded-lg shadow-2xl"/>
@@ -31,7 +31,8 @@ const user = ref<IUser | undefined>(undefined);
 const user_img = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
 
 onMounted(async () => {
-  user.value = await userService.tryGetRealUser();
+  const current = await userService.tryGetRealUser();
+  user.value = {...current}
 })
 </script>
 

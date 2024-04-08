@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-100 w-96 " v-if="items">
+  <ul class="menu w-96 " v-if="items">
     <DaisyListItem v-for="item in items" :key="item.name" :item="item"/>
   </ul>
 </template>

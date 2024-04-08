@@ -31,7 +31,8 @@ export function MoviesController() {
 
             if (movie) {
                 currentSearchedMovie.value = movie;
-                movieManager.currentSearchedMovieImage = `url(${TMDB_IMAGE_BASE_URI}${movie?.backdrop_path || movie?.poster_path})`;
+                movieManager.currentSearchedMovieImage = movieManager.get_movie_background_image_css(movie);
+
             } else {
                 movieManager.currentSearchedMovieImage = ``;
             }

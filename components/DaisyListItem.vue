@@ -13,15 +13,24 @@
 </template>
 <script setup lang="ts">
 import type {iDaisyListItem} from "~/components/DaisyList.vue";
+import {MoviesService} from "~/main/Movies/MoviesService";
 
-defineProps<{
+const props = defineProps<{
   item: iDaisyListItem
 }>()
+
+const movie_image = computed(() => {
+  const url = MoviesService().get_movie_background_image_css(props.item);
+  const shaded = `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.8)), ${url}`
+  return shaded
+})
 
 </script>
 <style scoped>
 .daisy-list-item {
-  background-image: url("https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
+  background: v-bind(movie_image);
+  background-position: center;
+  background-size: cover;
 }
 
 </style>

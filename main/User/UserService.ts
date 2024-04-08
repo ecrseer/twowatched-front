@@ -77,6 +77,22 @@ export class UserService {
         return null;
     }
 
+    public async edit_user(user: IUser) {
+        const config = useRuntimeConfig();
+        const url = `${config.public.BACKEND_USERS_URI}/user/`;
+        try {
+            const updated = await $fetch<IUser>(url, {
+                method: "PATCH",
+                body: user,
+            });
+            this.persistence.set_logged_user(updated);
+
+            return updated;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     public async sign_in_user(user: IUser, options?: { goingTo?: string }) {
         const config = useRuntimeConfig();
         const url = `${config.public.BACKEND_USERS_URI}/user/`;

@@ -56,13 +56,18 @@ export const MoviesService = defineStore("MoviesService", () => {
         return movies;
     }
 
+    function get_movie_background_image_css(movie: iTwaMovie) {
+        return `url(${TMDB_IMAGE_BASE_URI}${movie?.backdrop_path || movie?.poster_path})`
+    }
+
     return {
         addToMoviesList,
         currentSearchedMovieImage,
         recent_searches,
         getMovies,
         get_movie_characters,
-        fetch_movies_from_user
+        fetch_movies_from_user,
+        get_movie_background_image_css
     };
 });
 
