@@ -1,11 +1,11 @@
 <template>
   <div class="private-room">
     <section>
-      <h1>private{{ privateChatService?.current_room?._id }}}</h1>
+      <h1>Conversando com {{ receiver_username }}</h1>
     </section>
     <section
         class="private-chat-messages-container overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col"
-        v-if="privateChatService.current_room"
+        v-if="privateChatService?.current_room"
     >
       <ChatMessageBubble
           v-for="(msg, index) in current_messages"
@@ -64,6 +64,13 @@ function send_message() {
   });
   typing.value = "";
 }
+
+const receiver_username = computed(() => {
+  const private_room = privateChatService.current_room;
+  if (!private_room) return ''
+  return privateChatService.get_receiver_user_name_by_room(private_room)
+})
+
 </script>
 <style scoped>
 .private-room {

@@ -4,7 +4,7 @@ import {reactive, ref} from "vue";
 import type {iTwaMovie} from "../Movies/interfaces";
 
 import {UserService} from "../User/UserService";
-import type {IAllRooms, IPrivateChat} from "./interfaces";
+import type {IAllRooms, IPrivateChat, IUserTwaMessageDto} from "./interfaces";
 import {
     UsersWebsocketConnectionService,
     type iWebsocket,
@@ -132,6 +132,17 @@ export class PrivateChatService {
                 // this.receiver_attach.bind(this)();
             }
         );
+    }
+
+    public get_receiver_user_name_by_room(private_room: IPrivateChat) {
+        const current_user = this.userService.getTabUserInfo();
+        const other_user = private_room.users.find((user) => {
+            return user !== current_user._id
+        });
+        const msg = private_room.messages.find((msg) => {
+            return msg.sender_user_id === other_user
+        }) as IUserTwaMessageDto;
+        return msg.sender_user_name
     }
 
 

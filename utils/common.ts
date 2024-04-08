@@ -15,7 +15,7 @@ export function utilsAwaitUntil(condition: () => boolean, options: { maxTries: n
                 reject(false);
             } else {
                 options.maxTries--;
-                setTimeout(checkCondition, 3000);
+                setTimeout(checkCondition, 500);
             }
         };
         checkCondition();

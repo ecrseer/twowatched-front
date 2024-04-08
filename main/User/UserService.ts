@@ -72,9 +72,7 @@ export class UserService {
     }
 
     public async tryGetRealUser() {
-        const user = this.getTabUserInfo()
-
-        const real = await utilsAwaitUntil(() => this.is_real_user(this.getTabUserInfo()), {maxTries: 3});
+        const real = await utilsAwaitUntil(() => this.is_real_user(this.getTabUserInfo()), {maxTries: 7});
         if (real) return this.getTabUserInfo();
         return null;
     }
