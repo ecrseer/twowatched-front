@@ -67,7 +67,7 @@ const user = ref({
 function send_message() {
   roomService.send_message_to_room({...user.value, content: typing.value});
   typing.value = "";
-  refetch_character_if_not_present();
+  // refetch_character_if_not_present();
 }
 
 async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
@@ -76,13 +76,6 @@ async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
 }
 
 
-function refetch_character_if_not_present() {
-  const insufficient_characters =
-      Object.keys(roomService.current_room.usersCharacters).length < 2;
-  if (insufficient_characters) {
-    location.reload();
-  }
-}
 </script>
 <style scoped>
 .roleplay-chat-room {
