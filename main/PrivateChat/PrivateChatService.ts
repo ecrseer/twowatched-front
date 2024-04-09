@@ -66,7 +66,7 @@ export class PrivateChatService {
     }
 
     private on_append_message(room: IPrivateChat) {
-        console.log("~☠️ ~ PrivateChatService ~ on_append_message ~ room:", room);
+
         this.persistence.all_rooms[room._id] = room;
     }
 
@@ -122,7 +122,7 @@ export class PrivateChatService {
             "enter_all_private_chats",
             {sender_user_id: user._id},
             (response: IPrivateChat[]) => {
-                console.log(response)
+                
                 const mapped_rooms: IAllRooms = {}
                 response.reduce((acc, curr, index) => {
                     acc[curr._id] = curr;

@@ -47,7 +47,7 @@ export const MoviesService = defineStore("MoviesService", () => {
             method: "POST",
             body: {ids: user.moviesList},
         });
-        console.log("=>(MoviesService.ts:48) movies", movies);
+
 
         for (const movie of movies) {
             const movie_id = movie._id as string

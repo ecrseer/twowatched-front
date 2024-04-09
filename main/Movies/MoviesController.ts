@@ -2,6 +2,7 @@ import {mockSearchedMovie} from "../../tests/nuxt/utils";
 import type {iTwaMovie, iSearchRequestTmdbMovieDTO} from "./interfaces";
 import {MoviesService} from "./MoviesService";
 import type {iTwaroom} from "~/main/Twaroom/dtos";
+import {UserService} from "~/main/User/UserService";
 
 export function MoviesController() {
     const searching = ref("");
@@ -10,13 +11,16 @@ export function MoviesController() {
 
     const movieManager = MoviesService();
     const configs = useRuntimeConfig();
+    const userService = new UserService();
 
     let bounceSearch = setTimeout(() => null, 1);
 
     async function searchMovie() {
         is_fetching_data.value = true;
+        currentSearchedMovie.value = {};
         const base_url = "https://api.themoviedb.org/3/search/multi";
         let dto: any;
+        if (searching.value?.trim()?.length < 2) return;
         try {
             const config = useRuntimeConfig();
             const movie = await $fetch<iTwaMovie>(
@@ -25,8 +29,6 @@ export function MoviesController() {
                     method: "GET",
                 }
             );
-
-            console.log("=>(MoviesController.ts:34) dto", movie);
 
 
             if (movie) {
@@ -37,6 +39,7 @@ export function MoviesController() {
                 movieManager.currentSearchedMovieImage = ``;
             }
         } catch (err) {
+            dto = null;
             console.error(err);
         }
         is_fetching_data.value = false;
@@ -57,8 +60,30 @@ export function MoviesController() {
             movieManager.addToMoviesList(mockSearchedMovie(searching.value));
             // throw new Error("need to search first");
         }
+        searching.value = '';
     }
 
-    return {searching, onSearchMovieInput, onClickAddMovieBtn, searchMovie};
+    const is_current_movie_in_user_movies = computed(() => {
+        if (!currentSearchedMovie.value?.title) return true;
+        const user = userService.getTabUserInfo();
+        const user_movies = movieManager.getMovies();
+        for (const movie of user_movies) {
+            const searched = new RegExp(`${currentSearchedMovie.value.title}`, 'i');
+            if (searched.test(`${movie.title}`)) {
+                return true
+            }
+        }
+        return false
+    })
+
+    return {
+        searching,
+        is_fetching_data,
+        currentSearchedMovie,
+        is_current_movie_in_user_movies,
+        onSearchMovieInput,
+        onClickAddMovieBtn,
+        searchMovie
+    };
 }
 

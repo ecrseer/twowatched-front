@@ -51,8 +51,7 @@ const userService = new UserService();
 
 onMounted(async () => {
   userService.startApp();
-  console.log("=>(default.vue:54) ");
-
+  
   let user = await userService.tryGetRealUser();
   if (!user) {
     user = userService.getTabUserInfo();

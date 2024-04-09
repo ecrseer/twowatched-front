@@ -62,8 +62,6 @@ export class TwaroomService {
     public async enter_roleplay_notifications_room() {
         const user = await this.userService.tryGetRealUser()
         const moviesList = user?.moviesList;
-        console.log("=>(TwaroomService.ts:65) moviesList", moviesList);
-
 
         if (!moviesList?.length) throw new Error('Cant enter notification movie room')
 
@@ -113,7 +111,7 @@ export class TwaroomService {
             ...user_msg,
             sender_user_id: this.userService.getTabUserInfo()._id,
         };
-        this.append_message_to_current_room(user_message);
+        // this.append_message_to_current_room(user_message);
         ws_connection.emit("send_message", user_message, (room: iTwaroom) => {
             this.append_message_to_current_room(room);
         });
