@@ -40,7 +40,7 @@
           <section class="text-xs rotate-180">
             <div class="dropdown dropdown-end">
               <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">{{ user?.name }}</div>
-              <ul tabindex="0" class="menu dropdown-content z-[1] text-xs shadow bg-base-100 rounded-box w-52 mt-1">
+              <ul tabindex="0" class="menu dropdown-content z-[1] text-xs shadow bg-base-100 rounded-box w-16 mt-1">
                 <li @click="logout"><a>Sair</a></li>
 
               </ul>
