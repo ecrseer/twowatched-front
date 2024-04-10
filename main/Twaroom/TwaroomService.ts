@@ -35,9 +35,9 @@ export class TwaroomService {
         this.persistence = attach.persistence;
     }
 
-    public deconstructor() {
-        this.receiver.detach();
-    }
+    // public deconstructor() {
+    //     this.receiver.detach();
+    // }
 
     public init() {
         this.receiver.attach();
@@ -60,8 +60,13 @@ export class TwaroomService {
     }
 
     public async enter_roleplay_notifications_room() {
-        const user = await this.userService.tryGetRealUser()
+        let user = await this.userService.tryGetRealUser()
+        
+        if (!user) {
+            user = this.userService.getTabUserInfo();
+        }
         const moviesList = user?.moviesList;
+        console.log("=>(enter_roleplay_notifications_room.ts:65) moviesList", moviesList?.length);
 
         if (!moviesList?.length) throw new Error('Cant enter notification movie room')
 

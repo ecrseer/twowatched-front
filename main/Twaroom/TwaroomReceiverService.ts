@@ -37,24 +37,6 @@ export class TwaroomReceiverService {
         ws_connection.on("disconnect", TwaroomReceiverService.on_disconnect);
     }
 
-    public detach() {
-        const ws_connection: iWebsocket =
-            WebsocketConnectionService().get_connection();
-        ws_connection.off("receive_request_roleplay_chat");
-        ws_connection.off("append_message");
-        ws_connection.off("disconnect");
-    }
-
-    private static on_disconnect() {
-        new TwaroomService().enter_room_websocket();
-        const room_id =
-            TwaroomReceiverRepository().persistence
-                .roleplay_notification_acceptance_room;
-
-        WebsocketConnectionService()
-            .get_connection()
-            .emit("enter_room", {room_id});
-    }
 
     private static async on_request_roleplay_chat(dto: {
         notification: iNotification;
@@ -89,5 +71,24 @@ export class TwaroomReceiverService {
         const roomService = new TwaroomService();
         roomService.append_message_to_current_room(room);
     }
+
+    // public detach() {
+    //     const ws_connection: iWebsocket =
+    //         WebsocketConnectionService().get_connection();
+    //     ws_connection.off("receive_request_roleplay_chat");
+    //     ws_connection.off("append_message");
+    //     ws_connection.off("disconnect");
+    // }
+    //
+    // private static on_disconnect() {
+    //     new TwaroomService().enter_room_websocket();
+    //     const room_id =
+    //         TwaroomReceiverRepository().persistence
+    //             .roleplay_notification_acceptance_room;
+    //
+    //     WebsocketConnectionService()
+    //         .get_connection()
+    //         .emit("enter_room", {room_id});
+    // }
 }
 

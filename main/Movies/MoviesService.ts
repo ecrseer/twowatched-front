@@ -47,6 +47,7 @@ export const MoviesService = defineStore("MoviesService", () => {
             method: "POST",
             body: {ids: user.moviesList},
         });
+        console.log("=>(fetch_movies_from_user.ts:50) movies", movies);
 
 
         for (const movie of movies) {

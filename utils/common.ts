@@ -7,12 +7,12 @@ export function utilsRandomId() {
 }
 
 export function utilsAwaitUntil(condition: () => boolean, options: { maxTries: number }) {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
         const checkCondition = () => {
             if (condition()) {
                 resolve(true);
             } else if (options.maxTries <= 0) {
-                reject(false);
+                resolve(false);
             } else {
                 options.maxTries--;
                 setTimeout(checkCondition, 500);

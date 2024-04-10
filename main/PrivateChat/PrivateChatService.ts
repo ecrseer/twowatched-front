@@ -122,7 +122,7 @@ export class PrivateChatService {
             "enter_all_private_chats",
             {sender_user_id: user._id},
             (response: IPrivateChat[]) => {
-                
+
                 const mapped_rooms: IAllRooms = {}
                 response.reduce((acc, curr, index) => {
                     acc[curr._id] = curr;
@@ -142,7 +142,7 @@ export class PrivateChatService {
         const msg = private_room.messages.find((msg) => {
             return msg.sender_user_id === other_user
         }) as IUserTwaMessageDto;
-        return msg.sender_user_name
+        return msg?.sender_user_name
     }
 
 
