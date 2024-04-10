@@ -180,6 +180,20 @@ export class UserService {
         return created;
     }
 
+    public async find_movies_count_from_user() {
+        const config = useRuntimeConfig();
+        let user = await this.tryGetRealUser();
+        if (!user) {
+            user = this.getTabUserInfo();
+        }
+
+        const url = `${config.public.BACKEND_URI}/twaroom/count-roleplays-by-user-id/${user._id}`;
+        const counted_movies = await $fetch<any>(url, {
+            method: "GET",
+        });
+        return counted_movies;
+    }
+
 
 }
 

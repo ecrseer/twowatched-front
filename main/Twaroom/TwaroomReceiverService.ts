@@ -34,7 +34,7 @@ export class TwaroomReceiverService {
             "append_message",
             TwaroomReceiverService.on_append_message
         );
-        ws_connection.on("disconnect", TwaroomReceiverService.on_disconnect);
+        // ws_connection.on("disconnect", TwaroomReceiverService.on_disconnect);
     }
 
 

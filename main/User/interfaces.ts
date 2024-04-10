@@ -1,13 +1,19 @@
+import type {iTwaMovie} from "~/main/Movies/interfaces";
+
 export interface IUser {
-  _id: string;
-  email: string;
+    _id: string;
+    email: string;
 
-  name: string;
+    name: string;
 
-  password: string;
+    password: string;
 
-  moviesList: string[];
+    moviesList: string[];
 
-  //   privateChatsFixed: PrivateChat[];
+    //   privateChatsFixed: PrivateChat[];
 }
 
+export interface iMoviesRoomsCount {
+    count: number;
+    card_movie: [iTwaMovie];
+}
