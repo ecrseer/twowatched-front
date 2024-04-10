@@ -16,7 +16,7 @@
 
           <button
               @click="on_click_submit_sign_in"
-              class="btn btn-active btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg">Sign In
+              class="btn btn-active btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg">Cadastre-se
           </button>
 
         </div>

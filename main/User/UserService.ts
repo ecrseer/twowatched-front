@@ -3,6 +3,7 @@ import type {IUser} from "./interfaces";
 import {get_factory_temp_user} from "./utils";
 import {utilsAwaitUntil} from "~/utils/common";
 import type {iTwaMovie} from "~/main/Movies/interfaces";
+import {NotificationService} from "~/main/Notifications/NotificationService";
 
 export const STORAGE_KEY = "logged_user" as const;
 
@@ -87,6 +88,16 @@ export class UserService {
             });
             this.persistence.set_logged_user(updated);
 
+            const notify_service = new NotificationService();
+
+            notify_service.add_fading_notification(
+                {
+                    title: "User updated",
+                    description: `Seu usuário foi alterado com sucesso!`,
+                },
+                "bottom"
+            );
+
             return updated;
         } catch (err) {
             console.error(err);
@@ -108,6 +119,40 @@ export class UserService {
             return created;
         } catch (err) {
             console.log("~☠️ ~ UserService ~ sign_in_user ~ err:", err);
+        }
+    }
+
+    public async login_user(user: Partial<IUser>, options?: { goingTo?: string }) {
+        const notify_service = new NotificationService();
+        const config = useRuntimeConfig();
+        const url = `${config.public.BACKEND_USERS_URI}/user/login`;
+        try {
+            const found = await $fetch<IUser>(url, {
+                method: "POST",
+                body: user,
+            });
+            this.persistence.set_logged_user(found);
+            if (options?.goingTo) {
+                navigateTo(options.goingTo);
+            }
+
+            notify_service.add_fading_notification(
+                {
+                    title: "User logged in",
+                    description: `Bem vindo de volta, ${found.name}!`,
+                },
+                "bottom"
+            );
+            return found;
+        } catch (err) {
+            notify_service.add_fading_notification(
+                {
+                    title: "User logged in",
+                    description: `Email ou senha incorretas!`,
+                    type: 'error'
+                },
+                "bottom"
+            );
         }
     }
 

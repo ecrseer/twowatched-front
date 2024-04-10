@@ -19,10 +19,17 @@
           <DaisyNuxtLink :href="'/user-profile'">
             Perfil
           </DaisyNuxtLink>
+
         </template>
-        <DaisyNuxtLink :href="'/sign-in'" v-else>
-          Cadastrar
-        </DaisyNuxtLink>
+        <template v-else>
+
+          <DaisyNuxtLink :href="'/sign-in'">
+            Cadastrar
+          </DaisyNuxtLink>
+          <DaisyNuxtLink :href="'/login'">
+            Login
+          </DaisyNuxtLink>
+        </template>
 
 
       </div>
@@ -63,6 +70,14 @@ const current_route = computed(() => route.path)
 
 function logout() {
   new UserService().logout()
+  navigateTo('/', {replace: true});
+
+}
+
+function refresh() {
+  setTimeout(() => {
+    window.location.reload()
+  }, 1000)
 }
 </script>
 
