@@ -1,7 +1,7 @@
 <template>
   <div class="roleplay-chat-room">
     <div
-        class="overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col"
+        class="overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col roleplay-msgs-container"
         v-if="roomService.current_room"
     >
       <MessageImageProvider
@@ -79,8 +79,12 @@ async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
 </script>
 <style scoped>
 .roleplay-chat-room {
-  display: grid;
-  grid-template-rows: 80vh 200px;
+  /*display: grid;
+  grid-template-rows: 60dvh 200px;*/
+}
+
+.roleplay-msgs-container {
+  max-height: 55vh;
 }
 </style>
 
