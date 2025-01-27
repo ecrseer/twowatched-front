@@ -30,7 +30,6 @@ export function MoviesController() {
                 }
             );
 
-
             if (movie) {
                 currentSearchedMovie.value = movie;
                 movieManager.currentSearchedMovieImage = movieManager.get_movie_background_image_css(movie);
