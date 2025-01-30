@@ -1,11 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devtools: {enabled: true},
-    css: ["~/assets/css/main.css"],
+    devtools: { enabled: true },
+    css: ['~/assets/css/main.css'],
     runtimeConfig: {
         public: {
             BACKEND_URI: process.env.BACKEND_URI,
-            TMDB_API_KEY: process.env.TMDB_API_KEY,
             BACKEND_USERS_URI: process.env.BACKEND_USERS_URI,
         },
     },
@@ -19,17 +18,17 @@ export default defineNuxtConfig({
         head: {
             // this htmlAttrs you need
             htmlAttrs: {
-                "data-theme": "garden",
+                'data-theme': 'garden',
             },
             meta: [
-                {charset: 'utf-8'},
+                { charset: 'utf-8' },
                 {
                     name: 'viewport',
-                    content: 'width=device-width, initial-scale=1, interactive-widget=resizes-content'
-                }
+                    content:
+                        'width=device-width, initial-scale=1, interactive-widget=resizes-content',
+                },
             ],
         },
     },
-    modules: ["@pinia/nuxt", "nuxt-vitest", "@nuxt/content", "@nuxt/devtools"],
+    modules: ['@pinia/nuxt', 'nuxt-vitest', '@nuxt/content', '@nuxt/devtools'],
 });
-

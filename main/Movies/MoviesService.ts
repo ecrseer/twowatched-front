@@ -45,9 +45,9 @@ export const MoviesService = defineStore("MoviesService", () => {
         const config = useRuntimeConfig();
         const movies = await $fetch<iTwaMovie[]>(`${config.public.BACKEND_URI}/movies/by-ids`, {
             method: "POST",
-            body: {ids: user.moviesList},
+            body: { ids: user.moviesList},
         });
-        console.log("=>(fetch_movies_from_user.ts:50) movies", movies);
+
 
 
         for (const movie of movies) {

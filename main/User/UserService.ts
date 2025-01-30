@@ -40,7 +40,7 @@ export class UserService {
         this.persistence.set_logged_user(get_factory_temp_user())
     }
 
-    public startApp() {
+    public async startApp() {
         const user_str = localStorage?.getItem(STORAGE_KEY);
         const user: IUser = user_str
             ? JSON.parse(user_str)
@@ -52,6 +52,19 @@ export class UserService {
         if (!tab_user) {
             const temp_user: IUser = get_factory_temp_user();
             this.persistence.set_logged_user(temp_user);
+        }
+    }
+
+    private async getFactoryTempUser2(){
+        const config = useRuntimeConfig();
+        const url = `${config.public.BACKEND_USERS_URI}/user/factory-most-viewed-movies`;
+        try {
+            const updated = await $fetch<IUser>(url, {
+                method: "GET"
+            });
+            this.persistence.set_logged_user(updated);
+        }catch (error) {
+
         }
     }
 
