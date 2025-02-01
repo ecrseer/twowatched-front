@@ -20,9 +20,9 @@ useHead({
     width: 100vw;
     background: radial-gradient(
         circle,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 1) 50%,
-        rgba(255, 255, 255, 0) 100%
+        rgba(106, 55, 245, 0) 0%,
+        rgb(106, 55, 245) 50%,
+        rgba(106, 55, 245, 1) 100%
     );
     img {
         opacity: 0.5;

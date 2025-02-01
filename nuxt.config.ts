@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         head: {
             // this htmlAttrs you need
             htmlAttrs: {
-                'data-theme': 'garden',
+                'data-theme': 'synthwave',
             },
             meta: [
                 { charset: 'utf-8' },

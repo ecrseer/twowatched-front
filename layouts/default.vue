@@ -1,6 +1,9 @@
 <template>
     <PageIsLoading v-if="loading.mode === 'page'" />
-    <FirstTime v-else-if="loading.mode === 'firstTimeUser'" />
+    <FirstTime
+        v-else-if="loading.mode === 'firstTimeUser'"
+        @first-movie="loading.mode = 'page'"
+    />
     <div v-else class="twowatch">
         <header class="flex flex-col justify-center items-center w-full">
             <DaisyMenu :user="logged_user" />
@@ -38,6 +41,7 @@
                         <img
                             class="w-5"
                             src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
+                            alt="the movie db logo"
                         />
                     </div>
                 </div>
@@ -60,12 +64,12 @@ const userService = new UserService();
 const loading = reactive<{
     mode: 'off' | 'line' | 'page' | 'firstTimeUser';
 }>({
-    mode: 'off',
+    mode: 'page',
 });
 
 onMounted(async () => {
     loading.mode = 'page';
-    // loading.mode = 'off';
+
     await userService.startApp();
 
     let user = await userService.tryGetRealUser();
@@ -73,14 +77,15 @@ onMounted(async () => {
         user = userService.getTabUserInfo();
     }
     const movies = await moviesService.fetch_movies_from_user(user);
-    // console.log('=>(default.vue:78) movies', movies?.length);
-    // if (!movies?.length) {
-    //     loading.mode = 'firstTimeUser';
-    // }
 
-    roomService.init();
-    loading.mode = 'off';
-    await roomService.enter_roleplay_notifications_room();
+    console.log('=>(default.vue:78) movies', movies?.length);
+    if (!movies?.length) {
+        loading.mode = 'firstTimeUser';
+    } else {
+        roomService.init();
+        await roomService.enter_roleplay_notifications_room();
+        loading.mode = 'off';
+    }
 });
 const logged_user = computed(() => userService.getTabUserInfo());
 </script>
