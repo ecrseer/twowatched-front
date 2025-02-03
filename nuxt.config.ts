@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+import { iconsDef } from './icos-def';
+
 export default defineNuxtConfig({
-    devtools: { enabled: true },
+    devtools: { enabled: true, type: 'module' },
     css: ['~/assets/css/main.css'],
     runtimeConfig: {
         public: {
@@ -30,5 +33,28 @@ export default defineNuxtConfig({
             ],
         },
     },
-    modules: ['@pinia/nuxt', 'nuxt-vitest', '@nuxt/content', '@nuxt/devtools'],
+    modules: [
+        '@pinia/nuxt',
+        'nuxt-vitest',
+        '@nuxt/content',
+        '@nuxt/devtools',
+        '@vite-pwa/nuxt',
+    ],
+    pwa: {
+        manifest: {
+            name: '2watch - socialize com filmes',
+            short_name: '2watch',
+            description: ' socialize com filmes',
+            icons: iconsDef.icons,
+        },
+        devOptions: { enabled: true, type: 'module' },
+        workbox: {
+            navigateFallback: '/',
+            globPatterns: ['**/*.{js,css,html,png,svg,ico,json,woff2}'], // Ensure caching works
+            globDirectory: 'public',
+        },
+        client: {
+            installPrompt: true,
+        },
+    },
 });

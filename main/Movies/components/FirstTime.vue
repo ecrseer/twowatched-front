@@ -11,7 +11,7 @@
         <section class="flex justify-end">
             <button
                 class="btn btn-primary"
-                @click="onClickAddMovieBtn"
+                @click="onClickStartAddMovieBtn"
                 :class="{
                     'invisible animate-bounce':
                         !currentSearchedMovie?.title ||
