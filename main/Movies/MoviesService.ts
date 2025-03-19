@@ -56,7 +56,7 @@ export const MoviesService = defineStore('MoviesService', () => {
                     body: { ids: user.moviesList },
                 }
             );
-        } catch (err) {
+        } catch (err: any) {
             console.log('=>(MoviesService.ts:55) err', err?.message);
             console.error(err);
             throw err;
@@ -76,7 +76,11 @@ export const MoviesService = defineStore('MoviesService', () => {
     }
 
     function get_movie_background_image_css(movie: iTwaMovie) {
-        return `url(${TMDB_IMAGE_BASE_URI}${movie?.backdrop_path || movie?.poster_path})`;
+        return `url(${get_movie_img(movie)})`;
+    }
+
+    function get_movie_img(movie: iTwaMovie) {
+        return `${TMDB_IMAGE_BASE_URI}${movie?.backdrop_path || movie?.poster_path}`;
     }
 
     return {
@@ -87,5 +91,6 @@ export const MoviesService = defineStore('MoviesService', () => {
         get_movie_characters,
         fetch_movies_from_user,
         get_movie_background_image_css,
+        get_movie_img,
     };
 });

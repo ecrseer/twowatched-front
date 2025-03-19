@@ -1,15 +1,17 @@
 <template>
-    <li class="m-2 rounded-box shadow-xl daisy-list-item">
-        <a>
-            {{ item.name }}
-            <span
-                v-if="item.badge"
-                class="badge badge-sm badge-warning"
-                @click="item.onBadgeClick"
-                >{{ item.badge }}</span
-            >
-        </a>
-    </li>
+    <div class="card bg-base-100 image-full shadow-xs" style="width: 37vw">
+        <figure>
+            <img :src="movie_image" alt="Shoes" />
+        </figure>
+        <div class="card-body flex justify-between items-center">
+            <h2 class="card-title">{{ item.name }}</h2>
+            <div class="card-actions justify-end">
+                <button class="btn btn-primary" @click="item.onBadgeClick">
+                    Chat
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import type { iDaisyListItem } from '~/components/DaisyList.vue';
@@ -20,15 +22,11 @@ const props = defineProps<{
 }>();
 
 const movie_image = computed(() => {
-    const url = MoviesService().get_movie_background_image_css(props.item);
-    const shaded = `linear-gradient(rgba(106, 55, 245, 0.7), rgba(106, 55, 245, 0.8)), ${url}`;
-    return shaded;
+    const url = MoviesService().get_movie_img(props.item);
+
+    return url;
 });
+
+console.log('=>(DaisyListItem.vue:32) item', props.item);
 </script>
-<style scoped>
-.daisy-list-item {
-    background: v-bind(movie_image);
-    background-position: center;
-    background-size: cover;
-}
-</style>
+<style scoped></style>

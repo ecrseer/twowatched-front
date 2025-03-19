@@ -4,7 +4,7 @@
         <PageIsLoading v-if="loading.mode === 'page'" />
         <FirstTime
             v-else-if="loading.mode === 'firstTimeUser'"
-            @first-movie="loading.mode = 'page'"
+            @first-movie="loading.mode = 'off'"
         />
         <div v-else class="twowatch">
             <header class="flex flex-col justify-center items-center w-full">
