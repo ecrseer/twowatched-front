@@ -1,31 +1,31 @@
-import {defineStore} from "pinia";
-import {reactive, ref} from "vue";
+import { defineStore } from 'pinia';
+import { reactive, ref } from 'vue';
 import {
     MoviesService,
     type iEnterRoleplayRoomDto,
-} from "../Movies/MoviesService";
+} from '../Movies/MoviesService';
 import {
     WebsocketConnectionService,
     type iWebsocket,
-} from "./WebsocketConnectionService";
+} from './WebsocketConnectionService';
 import {
     NotificationService,
     type iNotification,
-} from "../Notifications/NotificationService";
-import type {iTwaMovie} from "../Movies/interfaces";
-import type {iTwamessage, iTwaroom} from "./dtos";
-import {TwaroomReceiverService} from "./TwaroomReceiverService";
-import {UserService} from "../User/UserService";
+} from '../Notifications/NotificationService';
+import type { iTwaMovie } from '../Movies/interfaces';
+import type { iTwamessage, iTwaroom } from './dtos';
+import { TwaroomReceiverService } from './TwaroomReceiverService';
+import { UserService } from '../User/UserService';
 
-const TwaroomRepository = defineStore("TwaroomRepository", () => {
+const TwaroomRepository = defineStore('TwaroomRepository', () => {
     const persistence = reactive({
         current_room: {} as iTwaroom,
     });
-    return {persistence};
+    return { persistence };
 });
 
 export class TwaroomService {
-    private persistence: ReturnType<typeof TwaroomRepository>["persistence"];
+    private persistence: ReturnType<typeof TwaroomRepository>['persistence'];
     private moviesService = MoviesService();
     private userService = new UserService();
     private receiver = new TwaroomReceiverService();
@@ -56,26 +56,30 @@ export class TwaroomService {
             WebsocketConnectionService().get_connection();
 
         const moviesList = this.moviesService.getMovies();
-        ws_connection.emit("request_roleplay_chat", {priority, moviesList});
+        ws_connection.emit('request_roleplay_chat', { priority, moviesList });
     }
 
     public async enter_roleplay_notifications_room() {
-        let user = await this.userService.tryGetRealUser()
-        
+        let user = await this.userService.tryGetRealUser();
+
         if (!user) {
             user = this.userService.getTabUserInfo();
         }
         const moviesList = user?.moviesList;
-        console.log("=>(enter_roleplay_notifications_room.ts:65) moviesList", moviesList?.length);
+        console.log(
+            '=>(enter_roleplay_notifications_room.ts:65) moviesList',
+            moviesList?.length
+        );
 
-        if (!moviesList?.length) throw new Error('Cant enter notification movie room')
+        if (!moviesList?.length)
+            throw new Error('Cant enter notification movie room');
 
         const ws_connection: iWebsocket =
             WebsocketConnectionService().get_connection();
         const dto: iEnterRoleplayRoomDto = {
             moviesListIds: moviesList,
         };
-        ws_connection.emit("enter_roleplay_notifications_room", dto);
+        ws_connection.emit('enter_roleplay_notifications_room', dto);
     }
 
     public async enter_twaroom(
@@ -87,7 +91,7 @@ export class TwaroomService {
             const room = await $fetch<iTwaroom>(
                 `${config.public.BACKEND_URI}/twaroom/by-id/${room_id}`,
                 {
-                    method: "GET",
+                    method: 'GET',
                 }
             );
             this.persistence.current_room = room;
@@ -105,7 +109,7 @@ export class TwaroomService {
             WebsocketConnectionService().get_connection();
         const room_id = this.persistence?.current_room?._id;
         if (room_id) {
-            ws_connection.emit("enter_room", {room_id});
+            ws_connection.emit('enter_room', { room_id });
         }
     }
 
@@ -117,15 +121,13 @@ export class TwaroomService {
             sender_user_id: this.userService.getTabUserInfo()._id,
         };
         // this.append_message_to_current_room(user_message);
-        ws_connection.emit("send_message", user_message, (room: iTwaroom) => {
+        ws_connection.emit('send_message', user_message, (room: iTwaroom) => {
             this.append_message_to_current_room(room);
         });
     }
-
 
     public append_message_to_current_room(room: iTwaroom) {
         this.persistence.current_room.usersCharacters = room.usersCharacters;
         this.persistence.current_room.messages = room.messages;
     }
 }
-

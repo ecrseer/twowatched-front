@@ -70,9 +70,15 @@ const loading = reactive<{
     mode: 'page',
 });
 
+const rConfig = useRuntimeConfig();
+
 onMounted(async () => {
     loading.mode = 'page';
 
+    console.log(
+        '=>(app.vue:78) rConfig.public.BACKEND_URI',
+        rConfig.public.BACKEND_URI
+    );
     await userService.startApp();
 
     let user = await userService.tryGetRealUser();
@@ -85,8 +91,6 @@ onMounted(async () => {
     if (!movies?.length) {
         loading.mode = 'firstTimeUser';
     } else {
-        roomService.init();
-        await roomService.enter_roleplay_notifications_room();
         loading.mode = 'off';
     }
 });

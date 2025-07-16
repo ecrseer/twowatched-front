@@ -25,14 +25,14 @@
 
 <script lang="ts" setup>
 import FabBtn from '~/components/FabBtn.vue';
+import { MoviesController } from '@/main/Movies/MoviesController';
+import MovieList from '@/main/Movies/components/MovieList.vue';
+import { TwaroomService } from '../main/Twaroom/TwaroomService';
 
 useHead({
     titleTemplate: '',
     title: 'twowatch',
 });
-
-import { MoviesController } from '@/main/Movies/MoviesController';
-import MovieList from '@/main/Movies/components/MovieList.vue';
 
 const {
     searching,
@@ -42,6 +42,13 @@ const {
     onClickAddMovieBtn,
     onSearchMovieInput,
 } = MoviesController();
+
+const roomService = new TwaroomService();
+
+onMounted(async () => {
+    roomService.init();
+    await roomService.enter_roleplay_notifications_room();
+});
 </script>
 <style scoped>
 .add-movie-btn {

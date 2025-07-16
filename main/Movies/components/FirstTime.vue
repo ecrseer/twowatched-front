@@ -45,6 +45,7 @@ const {
 const moviesService = MoviesService();
 
 const emit = defineEmits(['first-movie']);
+
 function onClickStartAddMovieBtn() {
     onClickAddMovieBtn();
     emit('first-movie');

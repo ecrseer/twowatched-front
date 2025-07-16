@@ -47,7 +47,7 @@ export const MoviesService = defineStore('MoviesService', () => {
             const awsdd = await $fetch(`${config.public.BACKEND_URI}`, {
                 method: 'GET',
             });
-            console.log('=>(MoviesService.ts:49) awsdd', awsdd);
+            console.log('=>(MoviesService.ts:50) awsdd', awsdd);
 
             const movies = await $fetch<iTwaMovie[]>(
                 `${config.public.BACKEND_URI}/movies/by-ids`,
