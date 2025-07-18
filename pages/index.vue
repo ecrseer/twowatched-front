@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col h-full justify-between items-stretch">
-        <!-- <div class="text-3xl">Seus interesses</div> -->
         <div class="flex flex-col items-center">
             <MovieList />
         </div>

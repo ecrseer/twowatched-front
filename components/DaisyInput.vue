@@ -8,9 +8,9 @@
         />
 
         <label
-            v-if="label && label.length > 59"
+            v-if="label"
             for="name"
-            class="absolute top-3 left-0 text-gray-400 pointer-events-none transition duration-200 ease-in-outbg-white px-2 text-grey-darker"
+            class="absolute top-3 left-0 pointer-events-none transition duration-200 ease-in-outbg-white px-2 text-white"
             >{{ props.label }}</label
         >
     </div>
