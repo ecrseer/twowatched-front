@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <VitePwaManifest />
         <PageIsLoading v-if="loading.mode === 'page'" />
         <FirstTime
@@ -21,7 +21,7 @@
                     class="current-searched-movie-image bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness -z-50"
                     v-if="true"
                 ></div>
-                <div class="h-full p-12">
+                <div class="h-full">
                     <NotificationsTopHandlerClient />
                     <main class="h-full">
                         <NuxtPage />
