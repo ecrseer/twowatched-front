@@ -29,8 +29,8 @@ import MovieList from '@/main/Movies/components/MovieList.vue';
 import { TwaroomService } from '../main/Twaroom/TwaroomService';
 
 useHead({
-    titleTemplate: '',
-    title: 'twowatch',
+    titleTemplate: '%s - twowatch',
+    title: 'Twowatch Indx',
 });
 
 const {
