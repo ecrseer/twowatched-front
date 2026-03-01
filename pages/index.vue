@@ -30,7 +30,7 @@ import { TwaroomService } from '../main/Twaroom/TwaroomService';
 
 useHead({
     titleTemplate: '%s - twowatch',
-    title: 'Twowatch Indx',
+    title: 'Twowatch Ind',
 });
 
 const {
