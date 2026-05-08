@@ -1,10 +1,10 @@
 <template>
-  <div class="private-room">
+  <div class="private-room h-full flex flex-col pb-[env(safe-area-inset-bottom)]">
     <section>
       <h1>Conversando com {{ receiver_username }}</h1>
     </section>
     <section
-        class="private-chat-messages-container overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col"
+        class="private-chat-messages-container flex-1 overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col"
         v-if="privateChatService?.current_room"
     >
       <ChatMessageBubble
@@ -15,7 +15,7 @@
           :user_name="msg?.sender_user_name"
       />
     </section>
-    <label class="input input-bordered flex items-center gap-2">
+    <label class="input input-bordered flex items-center gap-2 m-2 shrink-0">
       <input
           type="text"
           class="grow"
@@ -23,7 +23,11 @@
           @keyup.enter="send_message"
       />
 
-      <kbd class="kbd kbd-sm">Enter</kbd>
+      <button @click="send_message" class="btn btn-ghost btn-sm btn-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+          <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+        </svg>
+      </button>
     </label>
   </div>
 </template>
@@ -73,12 +77,6 @@ const receiver_username = computed(() => {
 
 </script>
 <style scoped>
-.private-room {
-  display: grid;
-}
-
-.private-chat-messages-container {
-  min-height: 40vh;
-}
+/* No longer need specific heights since we use flex layout */
 </style>
 

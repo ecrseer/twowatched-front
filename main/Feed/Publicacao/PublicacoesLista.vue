@@ -1,7 +1,7 @@
 <template>
-    <div class="roleplay-chat-room">
+    <div class="roleplay-chat-room h-full flex flex-col pb-[env(safe-area-inset-bottom)]">
         <section
-            class="roleplay-msgs-container overflow-auto flex flex-col gap-1 p-4 m-2 bg-base-100 shadow-lg ring-1"
+            class="roleplay-msgs-container flex-1 overflow-auto flex flex-col gap-1 p-4 m-2 bg-base-100 shadow-lg ring-1"
         >
             <ul class="flex flex-col gap-4">
                 <DyListItem
@@ -12,7 +12,7 @@
                 ></DyListItem>
             </ul>
         </section>
-        <label class="input input-bordered flex items-center gap-2">
+        <label class="input input-bordered flex items-center gap-2 m-2 shrink-0">
             <input
                 type="text"
                 class="grow"
@@ -20,7 +20,11 @@
                 @keyup.enter="criarPublicacao"
             />
 
-            <kbd class="kbd kbd-sm">Enter</kbd>
+            <button @click="criarPublicacao" class="btn btn-ghost btn-sm btn-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
+            </button>
         </label>
     </div>
 </template>
@@ -78,11 +82,10 @@ async function criarPublicacao() {
 </script>
 <style scoped>
 .roleplay-chat-room {
-    flex: 1 0 auto;
+    /* flex: 1 0 auto; - handled by tailwind classes */
 }
 
 .roleplay-msgs-container {
-    max-height: 80vh;
-    min-height: 80vh;
+    /* Handled by flex layout */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <div class="roleplay-chat-room">
+    <div class="roleplay-chat-room h-full flex flex-col pb-[env(safe-area-inset-bottom)]">
         <div
-            class="overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col roleplay-msgs-container"
+            class="overflow-auto p-4 m-2 bg-base-100 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col roleplay-msgs-container flex-1"
             v-if="roomService.current_room"
         >
             <MessageImageProvider
@@ -26,7 +26,7 @@
                 </template>
             </MessageImageProvider>
         </div>
-        <label class="input input-bordered flex items-center gap-2">
+        <label class="input input-bordered flex items-center gap-2 m-2 shrink-0">
             <input
                 type="text"
                 class="grow"
@@ -34,7 +34,11 @@
                 @keyup.enter="send_message"
             />
 
-            <kbd class="kbd kbd-sm">Enter</kbd>
+            <button @click="send_message" class="btn btn-ghost btn-sm btn-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
+            </button>
         </label>
     </div>
 </template>
@@ -79,12 +83,7 @@ async function onAvatarClick(msg: iTwamessage, requested_user_id: string) {
 }
 </script>
 <style scoped>
-.roleplay-chat-room {
-    /*display: grid;
-  grid-template-rows: 60dvh 200px;*/
-}
-
 .roleplay-msgs-container {
-    max-height: 55vh;
+    /* No longer need max-height since we use flex layout */
 }
 </style>

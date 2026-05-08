@@ -16,14 +16,14 @@
                     class="progress infinite-loading"
                 ></progress>
             </section>
-            <main class="h-full w-full font-sans">
+            <main class="flex-1 w-full font-sans overflow-hidden flex flex-col">
                 <div
                     class="current-searched-movie-image bg-cover bg-no-repeat bg-center absolute w-full h-full blur brightness -z-50"
                     v-if="true"
                 ></div>
-                <div class="h-full">
+                <div class="flex-1 flex flex-col overflow-hidden">
                     <NotificationsTopHandlerClient />
-                    <main class="h-full">
+                    <main class="flex-1 overflow-hidden">
                         <NuxtPage />
                     </main>
                 </div>
@@ -100,7 +100,8 @@ const logged_user = computed(() => userService.getTabUserInfo());
 .twowatch {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
 }
 .current-searched-movie-image {
     background-image: v-bind('moviesService.currentSearchedMovieImage');
