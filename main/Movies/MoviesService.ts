@@ -17,6 +17,9 @@ export const MoviesService = defineStore('MoviesService', () => {
     const recent_searches = ref<Record<IMovie_ID, iTwaMovie>>({});
 
     async function addToMoviesList(movie: iTwaMovie) {
+        if (movie._id) {
+            recent_searches.value[movie._id] = movie;
+        }
         const user = await userService.add_movies_to_current_user([movie]);
 
         await fetch_movies_from_user(user);
@@ -43,35 +46,29 @@ export const MoviesService = defineStore('MoviesService', () => {
     async function fetch_movies_from_user(user: IUser) {
         const config = useRuntimeConfig();
 
-        try {
-            const awsdd = await $fetch(`${config.public.BACKEND_URI}`, {
-                method: 'GET',
-            });
-            console.log('=>(MoviesService.ts:50) awsdd', awsdd);
+        if (!user?.moviesList?.length) {
+            return [];
+        }
 
-            const movies = await $fetch<iTwaMovie[]>(
+        let movies: iTwaMovie[] = [];
+        try {
+            movies = await $fetch<iTwaMovie[]>(
                 `${config.public.BACKEND_URI}/movies/by-ids`,
                 {
                     method: 'POST',
                     body: { ids: user.moviesList },
                 }
             );
+
+            for (const movie of movies) {
+                const movie_id = movie._id as string;
+                recent_searches.value[movie_id] = movie;
+            }
         } catch (err: any) {
             console.log('=>(MoviesService.ts:55) err', err?.message);
             console.error(err);
-            throw err;
         }
-        const movies = await $fetch<iTwaMovie[]>(
-            `${config.public.BACKEND_URI}/movies/by-ids`,
-            {
-                method: 'POST',
-                body: { ids: user.moviesList },
-            }
-        );
-        for (const movie of movies) {
-            const movie_id = movie._id as string;
-            recent_searches.value[movie_id] = movie;
-        }
+
         return movies;
     }
 

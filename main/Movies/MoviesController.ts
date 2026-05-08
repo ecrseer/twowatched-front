@@ -1,11 +1,11 @@
-import {mockSearchedMovie} from "../../tests/nuxt/utils";
-import type {iTwaMovie, iSearchRequestTmdbMovieDTO} from "./interfaces";
-import {MoviesService} from "./MoviesService";
-import type {iTwaroom} from "~/main/Twaroom/dtos";
-import {UserService} from "~/main/User/UserService";
+import { mockSearchedMovie } from '../../tests/nuxt/utils';
+import type { iTwaMovie, iSearchRequestTmdbMovieDTO } from './interfaces';
+import { MoviesService } from './MoviesService';
+import type { iTwaroom } from '~/main/Twaroom/dtos';
+import { UserService } from '~/main/User/UserService';
 
 export function MoviesController() {
-    const searching = ref("");
+    const searching = ref('');
     const is_fetching_data = ref(false);
     const currentSearchedMovie = ref<iTwaMovie>({});
 
@@ -18,7 +18,7 @@ export function MoviesController() {
     async function searchMovie() {
         is_fetching_data.value = true;
         currentSearchedMovie.value = {};
-        const base_url = "https://api.themoviedb.org/3/search/multi";
+        const base_url = 'https://api.themoviedb.org/3/search/multi';
         let dto: any;
         if (searching.value?.trim()?.length < 2) return;
         try {
@@ -26,20 +26,20 @@ export function MoviesController() {
             const movie = await $fetch<iTwaMovie>(
                 `${config.public.BACKEND_URI}/movies/by-name/${searching.value}`,
                 {
-                    method: "GET",
+                    method: 'GET',
                 }
             );
 
             if (movie) {
                 currentSearchedMovie.value = movie;
-                movieManager.currentSearchedMovieImage = movieManager.get_movie_background_image_css(movie);
-
+                movieManager.currentSearchedMovieImage =
+                    movieManager.get_movie_background_image_css(movie);
             } else {
                 movieManager.currentSearchedMovieImage = ``;
             }
-        } catch (err) {
+        } catch (err: any) {
             dto = null;
-            console.error(err);
+            console.warn('Falha em:' + err?.message, err);
         }
         is_fetching_data.value = false;
         return dto;
@@ -53,7 +53,10 @@ export function MoviesController() {
     function onClickAddMovieBtn() {
         if (is_fetching_data.value) return;
 
-        if (currentSearchedMovie.value.title! || currentSearchedMovie.value.name) {
+        if (
+            currentSearchedMovie.value.title! ||
+            currentSearchedMovie.value.name
+        ) {
             movieManager.addToMoviesList(currentSearchedMovie.value);
         } else {
             movieManager.addToMoviesList(mockSearchedMovie(searching.value));
@@ -67,13 +70,16 @@ export function MoviesController() {
         const user = userService.getTabUserInfo();
         const user_movies = movieManager.getMovies();
         for (const movie of user_movies) {
-            const searched = new RegExp(`${currentSearchedMovie.value.title}`, 'i');
+            const searched = new RegExp(
+                `${currentSearchedMovie.value.title}`,
+                'i'
+            );
             if (searched.test(`${movie.title}`)) {
-                return true
+                return true;
             }
         }
-        return false
-    })
+        return false;
+    });
 
     return {
         searching,
@@ -82,7 +88,6 @@ export function MoviesController() {
         is_current_movie_in_user_movies,
         onSearchMovieInput,
         onClickAddMovieBtn,
-        searchMovie
+        searchMovie,
     };
 }
-

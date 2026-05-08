@@ -1,13 +1,13 @@
-import {defineStore} from "pinia";
-import type {IUser} from "./interfaces";
-import {get_factory_temp_user} from "./utils";
-import {utilsAwaitUntil} from "~/utils/common";
-import type {iTwaMovie} from "~/main/Movies/interfaces";
-import {NotificationService} from "~/main/Notifications/NotificationService";
+import { defineStore } from 'pinia';
+import type { IUser } from './interfaces';
+import { get_factory_temp_user } from './utils';
+import { utilsAwaitUntil } from '~/utils/common';
+import type { iTwaMovie } from '~/main/Movies/interfaces';
+import { NotificationService } from '~/main/Notifications/NotificationService';
 
-export const STORAGE_KEY = "logged_user" as const;
+export const STORAGE_KEY = 'logged_user' as const;
 
-const UserRepository = defineStore("UserRepository", () => {
+const UserRepository = defineStore('UserRepository', () => {
     const persistence = reactive({
         logged_user: get_factory_temp_user(),
     });
@@ -25,11 +25,11 @@ const UserRepository = defineStore("UserRepository", () => {
         return persistence.logged_user;
     }
 
-    return {getset: {set_logged_user, get_logged_user}};
+    return { getset: { set_logged_user, get_logged_user } };
 });
 
 export class UserService {
-    private persistence: ReturnType<typeof UserRepository>["getset"];
+    private persistence: ReturnType<typeof UserRepository>['getset'];
 
     constructor() {
         const attach = UserRepository();
@@ -37,7 +37,7 @@ export class UserService {
     }
 
     public logout() {
-        this.persistence.set_logged_user(get_factory_temp_user())
+        this.persistence.set_logged_user(get_factory_temp_user());
     }
 
     public async startApp() {
@@ -55,22 +55,20 @@ export class UserService {
         }
     }
 
-    private async getFactoryTempUser2(){
+    private async getFactoryTempUser2() {
         const config = useRuntimeConfig();
         const url = `${config.public.BACKEND_USERS_URI}/user/factory-most-viewed-movies`;
         try {
             const updated = await $fetch<IUser>(url, {
-                method: "GET"
+                method: 'GET',
             });
             this.persistence.set_logged_user(updated);
-        }catch (error) {
-
-        }
+        } catch (error) {}
     }
 
     public getTabUserInfo(): IUser {
         const temp_user = get_factory_temp_user();
-        if (typeof window === "undefined" || !localStorage) return temp_user;
+        if (typeof window === 'undefined' || !localStorage) return temp_user;
 
         const logged_user = this.persistence.get_logged_user();
         return logged_user || temp_user;
@@ -81,13 +79,13 @@ export class UserService {
     }
 
     public is_real_user(user: IUser) {
-        const REAL_USER_ID_MODEL = 'X609e7cxf6baXb0feX7d7X1a'
-        return user._id?.length === REAL_USER_ID_MODEL?.length
+        const REAL_USER_ID_MODEL = 'X609e7cxf6baXb0feX7d7X1a';
+        return user._id?.length === REAL_USER_ID_MODEL?.length;
     }
 
     public async tryGetRealUser() {
-        const real = await utilsAwaitUntil(() => this.is_real_user(this.getTabUserInfo()), { maxTries: 7});
-        if (real) return this.getTabUserInfo();
+        const user = this.getTabUserInfo();
+        if (this.is_real_user(user)) return user;
         return null;
     }
 
@@ -96,7 +94,7 @@ export class UserService {
         const url = `${config.public.BACKEND_USERS_URI}/user/`;
         try {
             const updated = await $fetch<IUser>(url, {
-                method: "PATCH",
+                method: 'PATCH',
                 body: user,
             });
             this.persistence.set_logged_user(updated);
@@ -105,10 +103,10 @@ export class UserService {
 
             notify_service.add_fading_notification(
                 {
-                    title: "User updated",
+                    title: 'User updated',
                     description: `Seu usuário foi alterado com sucesso!`,
                 },
-                "bottom"
+                'bottom'
             );
 
             return updated;
@@ -122,7 +120,7 @@ export class UserService {
         const url = `${config.public.BACKEND_USERS_URI}/user/`;
         try {
             const created = await $fetch<IUser>(url, {
-                method: "POST",
+                method: 'POST',
                 body: user,
             });
             this.persistence.set_logged_user(created);
@@ -131,17 +129,20 @@ export class UserService {
             }
             return created;
         } catch (err) {
-            console.log("~☠️ ~ UserService ~ sign_in_user ~ err:", err);
+            console.log('~☠️ ~ UserService ~ sign_in_user ~ err:', err);
         }
     }
 
-    public async login_user(user: Partial<IUser>, options?: { goingTo?: string }) {
+    public async login_user(
+        user: Partial<IUser>,
+        options?: { goingTo?: string }
+    ) {
         const notify_service = new NotificationService();
         const config = useRuntimeConfig();
         const url = `${config.public.BACKEND_USERS_URI}/user/login`;
         try {
             const found = await $fetch<IUser>(url, {
-                method: "POST",
+                method: 'POST',
                 body: user,
             });
             this.persistence.set_logged_user(found);
@@ -151,31 +152,29 @@ export class UserService {
 
             notify_service.add_fading_notification(
                 {
-                    title: "User logged in",
+                    title: 'User logged in',
                     description: `Bem vindo de volta, ${found.name}!`,
                 },
-                "bottom"
+                'bottom'
             );
             return found;
         } catch (err) {
             notify_service.add_fading_notification(
                 {
-                    title: "User logged in",
+                    title: 'User logged in',
                     description: `Email ou senha incorretas!`,
-                    type: 'error'
+                    type: 'error',
                 },
-                "bottom"
+                'bottom'
             );
         }
     }
 
     public async add_movies_to_current_user(movies: iTwaMovie[]) {
-
         let user = this.getTabUserInfo();
-        const moviesIds = movies.map(m => m._id) as string[]
+        const moviesIds = movies.map((m) => m._id) as string[];
         user.moviesList.push(...moviesIds);
         this.setTabUserInfo(user);
-
 
         if (this.is_real_user(user)) {
             return this.save_movies_on_user(user);
@@ -186,11 +185,12 @@ export class UserService {
     private async save_movies_on_user(user: IUser) {
         const config = useRuntimeConfig();
         const url = `${config.public.BACKEND_USERS_URI}/user/save-movies`;
-        const created = await $fetch<IUser>(url, {
-            method: "PATCH",
+        const updated = await $fetch<IUser>(url, {
+            method: 'PATCH',
             body: user,
         });
-        return created;
+        this.setTabUserInfo(updated);
+        return updated;
     }
 
     public async find_movies_count_from_user() {
@@ -202,11 +202,8 @@ export class UserService {
 
         const url = `${config.public.BACKEND_URI}/twaroom/count-roleplays-by-user-id/${user._id}`;
         const counted_movies = await $fetch<any>(url, {
-            method: "GET",
+            method: 'GET',
         });
         return counted_movies;
     }
-
-
 }
-
